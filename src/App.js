@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import $ from 'jquery';
 import Header from './components/Header';
 import HomePage from './components/HomePage';
@@ -53,19 +54,19 @@ const App = () => {
   }, []);
 
   return (
-    <>
-      <Background />
-      <Header />
-      <HomePage />
-      <Espansioni />
-      <section className="separator animeX"></section>
-      <InfoCards />
-      <div className="bg_separate">
-      <Background />
-      </div>
-      <section className="separator animeX"></section>
-      <Footer />
-    </>
+      <>
+        <Background />
+        <Header />
+        <HomePage />
+        <Espansioni />
+        <section className="separator animeX"></section>
+        <InfoCards />
+        <div className="bg_separate">
+          <Background />
+        </div>
+        <section className="separator animeX"></section>
+        <Footer />
+      </>
   );
 };
 

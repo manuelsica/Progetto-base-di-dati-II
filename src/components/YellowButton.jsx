@@ -3,13 +3,22 @@
 import React from 'react';
 import '../assets/css/yellow.css';
 import star from '../assets/images/star.png';
-import circle from '../assets/images/circle.png';
 import diamond from '../assets/images/diamond.png';
-import triangle from '../assets/images/triangle.png';
+import { useNavigate  } from 'react-router-dom';
 
-const MagicButton = ({ buttonText }) => {
+
+const MagicButton = ({ buttonText, navigateTo, onClick }) => {
+    let navigate = useNavigate();
+    const handleClick = () => {
+      if (onClick) {
+        onClick();
+      }
+      if (navigateTo) {
+        navigate(navigateTo);
+      }
+    };
     return (
-        <div className="container_2">
+        <div className="container_2" onClick = {handleClick}>
             <a href="#" className="button_2">
                 <div className="button__content_2">
                     <span className="button__text_2">{buttonText}</span>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu } from 'react-ionicons';
 import logo from '../assets/images/logo.png';
-
+import { Link } from 'react-router-dom' 
 const Header = () => {
   const toggleMenu = () => {
     const nav = document.querySelector('header nav');
@@ -14,10 +14,10 @@ const Header = () => {
     <header>
       <a href="#" className="logo"><img src={logo} alt="MyLogo" /></a>
       <nav id="navbar">
-        <a href="#">Home</a>
-        <a href="#">Espansioni</a>
-        <a href="#">Carte</a>
-        <a href="#">Login</a>
+        <Link to = "/">Home</Link>
+        <Link to = "/espansioni">Espansioni</Link>
+        <Link to = "/carte">Carte</Link>
+        <Link to = "/login">Login</Link>
       </nav>
       <div className="hamburger" id="hamburger" onClick={toggleMenu}>
         <Menu color={'#00000'} title={Menu} />

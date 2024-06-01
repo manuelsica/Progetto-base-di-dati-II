@@ -3,10 +3,15 @@
 import React from 'react';
 import '../assets/css/blue.css';
 import circle from '../assets/images/circle.png';
+import { useNavigate  } from 'react-router-dom';
 
-const MagicButton = ({ buttonText }) => {
+const MagicButton = ({ buttonText, navigateTo }) => {
+    let navigate = useNavigate();
+    const handleClick = () => {
+        navigate(navigateTo);
+    }
     return (
-        <div className="container_1">
+        <div className="container_1" onClick = {handleClick}>
             <a href="#" className="button_1">
                 <div className="button__content_1">
                     <span className="button__text_1">{buttonText}</span>
