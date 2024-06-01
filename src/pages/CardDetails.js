@@ -1,13 +1,19 @@
 import React from 'react';
 import Header from '../components/Header';
+import { Helmet } from 'react-helmet';
 import Background from '../components/Background';
 import Footer from '../components/Footer';
 import grass from '../assets/images/grass.png';
 import fire from '../assets/images/fire.png';
 import normal from '../assets/images/normal.png';
+
 const CardDetails = () => {
+  const cardName = "Celebi & Venusaur-GX";
   return (
     <>
+    <Helmet>
+        <title>PokeDB - {cardName} </title>
+    </Helmet>
     <Background />
     <Header />
     <div id="wrapper">
@@ -26,8 +32,7 @@ const CardDetails = () => {
               <nav className="card-details_head level">
                 <div className="level-left">
                   <div className="level-item">
-                    <span className="title is-3">
-                      Celebi & Venusaur-GX
+                  <span className="title is-3">{cardName}
                       <div className="title is-5 has-text-muted">
                         Pokémon - Basic, TAG TEAM, GX
                       </div>

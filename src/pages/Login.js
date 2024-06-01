@@ -4,7 +4,7 @@ import Background from '../components/Background';
 import Footer from '../components/Footer';
 import YellowButton from '../components/YellowButton';
 import MagicButton from '../components/MagicButton';
-
+import { Helmet } from 'react-helmet';
 const Login = () => {
   const [isActive, setIsActive] = useState(false);
 
@@ -18,6 +18,9 @@ const Login = () => {
 
   return (
     <>
+    <Helmet>
+    <title>PokeDB - Login</title>
+    </Helmet>
     <Background />
     <Header />
     <section className="homepage">

@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import Background from '../components/Background';
 import Footer from '../components/Footer';
-import YellowButton from '../components/YellowButton';
-import MagicButton from '../components/MagicButton';
-
+import { Helmet } from 'react-helmet';
 const Espansioni_page = () => {
   return (
+    <>
+    <Helmet>
+    <title>PokeDB - Espansioni</title>
+    </Helmet>
     <>
     <Background />
     <Header />
@@ -14,6 +16,7 @@ const Espansioni_page = () => {
       
     </section>
     <Footer />
+    </>
     </>
   );
 };

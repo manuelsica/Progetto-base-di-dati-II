@@ -12,7 +12,7 @@ const Header = () => {
 
   return (
     <header>
-      <a href="#" className="logo"><img src={logo} alt="MyLogo" /></a>
+      <Link to = "/"><a href="" className="logo"><img src={logo} alt="MyLogo" /></a></Link>
       <nav id="navbar">
         <Link to = "/">Home</Link>
         <Link to = "/espansioni">Espansioni</Link>

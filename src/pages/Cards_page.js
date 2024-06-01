@@ -4,8 +4,11 @@ import Background from '../components/Background';
 import Footer from '../components/Footer';
 import CardDetails from './CardDetails';
 import { Link } from 'react-router-dom';
-
+import { Helmet } from 'react-helmet';
 const Carte = () => {
+  <Helmet>
+        <title>PokeDB - Carte</title>
+  </Helmet>
   const [filter, setFilter] = useState('all');
 
   const games = [
