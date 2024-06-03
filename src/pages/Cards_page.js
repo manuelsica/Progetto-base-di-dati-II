@@ -6,11 +6,7 @@ import CardDetails from './CardDetails';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 const Carte = () => {
-  <Helmet>
-        <title>PokeDB - Carte</title>
-  </Helmet>
   const [filter, setFilter] = useState('all');
-
   const games = [
     { id: 1, type: '', name: '', price: 10, imgSrc: 'https://images.pokemontcg.io/xy2/12_hires.png' },
     { id: 2, type: '', name: '', price: 10, imgSrc: 'https://images.pokemontcg.io/xy2/13_hires.png' },
@@ -29,28 +25,31 @@ const Carte = () => {
   const filteredGames = filter === 'all' ? games : games.filter(game => game.type === filter);
 
   return (
+
     <>
-    <Background />
+      <Helmet>
+        <title>PokeDB - Carte</title>
+      </Helmet>
+      <Background />
       <Header />
-        <div className="games" id="games">
-          
-          <ul>
-            {/* <li className={`list ${filter === 'all' ? 'active' : ''}`} onClick={() => setFilter('all')}>All</li>
+      <div className="games" id="games">
+
+        <ul>
+          {/* <li className={`list ${filter === 'all' ? 'active' : ''}`} onClick={() => setFilter('all')}>All</li>
             <li className={`list ${filter === 'pc' ? 'active' : ''}`} onClick={() => setFilter('pc')}>Pc Games</li>
             <li className={`list ${filter === 'console' ? 'active' : ''}`} onClick={() => setFilter('console')}>Console Games</li> */}
-          </ul>
-          <div className="cardBx">
+        </ul>
+        <div className="cardBx">
           <h2>Carte</h2>
           {filteredGames.map(game => (
-              <Link to={`/card-details/${game.id}`} key={game.id}> {/* Utilizza Link per reindirizzare */}
-                <div className="card" data-item={game.type}>
-                  <img src={game.imgSrc} alt={game.name} />
-                </div>
-              </Link>
-            ))}
-          </div>
-
+            <Link to={`/card-details/${game.id}`} key={game.id}> {/* Utilizza Link per reindirizzare */}
+              <div className="card" data-item={game.type}>
+                <img src={game.imgSrc} alt={game.name}/>
+              </div>
+            </Link>
+          ))}
         </div>
+      </div>
       <Footer />
     </>
   );

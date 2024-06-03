@@ -910,6 +910,7 @@ footer .wave#wave4 {
     animation: haloCard 15s ease infinite;
     background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/13471/sparkles.gif");
     background-size: 180%;
+    height: 278.207px;
 }
 
 .games .cardBx .card img {
@@ -1192,7 +1193,7 @@ span.title.is-4 {
 @media screen and (min-width: 1024px) {
     .container {
         max-width: 960px;
-        
+
     }
 }
 
@@ -4680,7 +4681,106 @@ a.has-text-white:focus {
 .is-size-7 {
     font-size: .75rem !important
 }
+/* src/components/PokemonSets.css */
+.container_expansion {
+    margin-top: 150px;
+    margin-bottom: 150px;
+}
 
+.series-group {
+    margin-bottom: 40px;
+    position: relative;
+    background-color: white;
+    border-radius: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 15px;
+}
+  
+.series-group h2 {
+    background-color: white;
+    padding: 10px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: rgb(255, 0, 43);
+}
+  
+  .sets-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .set-card {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 15px; /* Angoli leggermente arrotondati */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    width: calc(33.333% - 20px); /* Tre elementi per riga con gap di 20px */
+    box-sizing: border-box;
+    padding: 20px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .set-card:hover {
+    transform: translateY(-5px) scale(1.05); /* Sollevamento e ingrandimento al passaggio del mouse */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* Ombra più intensa al passaggio del mouse */
+    background-color: #f5f5f5;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease-in-out;
+  }
+  
+  .set-card img {
+    max-width: 30%; /* Ridimensiona le immagini a una larghezza massima del 30% */
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease-in-out;
+  }
+  
+  .set-card:hover img {
+    transform: scale(1.1); /* Ingrandimento dell'immagine al passaggio del mouse */
+  }
+  
+  .set-info {
+    text-align: center; /* Centro il testo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0.8;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .set-card:hover .set-info {
+    opacity: 1;
+  }
+  
+  .set-info h3, .set-info p {
+    margin: 5px 0; /* Aggiunge margini per spaziatura */
+  }
+  
+  @media (max-width: 768px) {
+    .set-card {
+      width: calc(50% - 20px); /* Due elementi per riga su schermi piccoli */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .set-card {
+      width: 100%; /* Un elemento per riga su schermi molto piccoli */
+    }
+  }
+
+  
 @media screen and (max-width: 768px) {
     .is-size-1-mobile {
         font-size: 3rem !important
@@ -5171,10 +5271,10 @@ print {
 
 @media (max-width: 768px) {
     .container {
-      height: 200vh;
+        height: 200vh;
     }
-  }
-  
+}
+
 .games .cardBx .card.hide {
     display: none;
 }
@@ -5487,7 +5587,7 @@ print {
         width: 350px;
     }
 
-    
+
 }
 
 /* Media query per dispositivi piccoli */
