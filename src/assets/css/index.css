@@ -359,6 +359,11 @@ header .hamburger {
     animation: haloSparkle 15s ease infinite;
 }
 
+small.generate_code {
+    font-size: 10px;
+    color: lightgreen;
+}
+
 .imgBox .card.active:before {
     opacity: 1;
     animation: none;
@@ -514,6 +519,7 @@ html {
 
 footer {
     position: relative;
+    bottom: 0;
     width: 100%;
     background: #fff;
     padding: 20px 50px;
@@ -522,6 +528,7 @@ footer {
     align-items: center;
     flex-direction: column;
     margin-top: auto;
+    z-index: 1000; /* Aggiungi z-index per assicurarti che il footer sia sopra altri elementi */
 }
 
 footer .social_icon .logo-icon,
@@ -980,6 +987,64 @@ footer .wave#wave4 {
     box-shadow: 5px 5px 6px rgba(0, 0, 0, .45);
     animation: haloCard 15s ease infinite;
 }
+
+
+.App {
+    text-align: center;
+    position: relative;
+    margin-top: 150px;
+    margin-bottom: 150px;
+    margin-right: 30px;
+    margin-left: 30px;
+    padding: 25px;
+    border-radius: 15px;
+    background-color: white;
+    min-height: calc(100vh - 120px); /* Sottrai l'altezza del footer */
+    /* Assicurati di regolare i 120px in base all'altezza effettiva del tuo footer */
+    display: flex;
+    flex-direction: column;
+}
+  
+    .pagination-buttons{
+        display: flex;
+        justify-content: center;
+        gap: 16px; /* Add padding between buttons */
+        margin-top: 20px;
+    }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .card img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .card-image {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+    margin: 20px 0;
+    cursor: pointer;
+  }
+  
+  .pagination-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 16px; /* Add padding between buttons */
+    margin-top: 20px;
+  }
+  
+
 
 @keyframes haloCard {
 

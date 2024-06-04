@@ -23,31 +23,32 @@ const Espansioni_page = () => {
     acc[set.series].push(set);
     return acc;
   }, {});
-  
+
   return (
     <>
       <Helmet>
         <title>PokeDB - Espansioni</title>
       </Helmet>
       <Header />
+
       <div className='container_expansion'>
-        {Object.keys(groupedSets).map(series => (
-          <div key={series} className="series-group">
-            <h2>{series}</h2>
-            <div className="sets-grid">
-              {groupedSets[series].map(set => (
-                <div key={set.id} className="set-card">
-                  <img src={set.images.logo} alt={set.name} />
-                  <div className="set-info">
-                    <h3>{set.name}</h3>
-                    <p>Release Date: {set.releaseDate}</p>
+          {Object.keys(groupedSets).map(series => (
+            <div key={series} className="series-group">
+              <h2>{series}</h2>
+              <div className="sets-grid">
+                {groupedSets[series].map(set => (
+                  <div key={set.id} className="set-card">
+                    <img src={set.images.logo} alt={set.name} />
+                    <div className="set-info">
+                      <h3>{set.name}</h3>
+                      <p>Release Date: {set.releaseDate}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
       <Footer />
     </>
   );
