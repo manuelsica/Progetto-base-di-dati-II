@@ -71,21 +71,6 @@ const CardDetails = () => {
     }
   };
 
-  const renderPrices = (prices) => {
-    if (!prices) return 'N/A';
-
-    return Object.entries(prices).map(([edition, priceDetails]) => (
-      <div key={edition} className="price-detail">
-        <div className="title is-5">{edition}</div>
-        <div>Low: {priceDetails.low || 'N/A'} euro</div>
-        <div>Mid: {priceDetails.mid || 'N/A'} euro</div>
-        <div>High: {priceDetails.high || 'N/A'} euro</div>
-        <div>Market: {priceDetails.market || 'N/A'} euro</div>
-        <div>Direct Low: {priceDetails.directLow || 'N/A'} euro</div>
-      </div>
-    ));
-  };
-
   return (
     <>
       <Helmet>
@@ -136,9 +121,13 @@ const CardDetails = () => {
                   <hr />
                   <section className="pt-0 mb-4">
                     <div className="is-flex is-align-items-center mb-4">
-                      <div className="title is-4 has-text-muted mb-0 mr-2">
-                        Prices:
-                        {renderPrices(card.tcgplayer?.prices)}
+                    <div className="title is-4 has-text-muted mb-0 mr-2">
+                        Prices: {
+                          card.tcgplayer?.prices?.unlimited?.mid ||
+                          card.tcgplayer?.prices?.unlimited?.high ||
+                          card.tcgplayer?.prices?.normal?.high ||
+                          'N/A'
+                        } euro
                       </div>
                     </div>
                   </section>
@@ -265,7 +254,31 @@ const CardDetails = () => {
                           </div>
                         </div>
                       )}
+                      {card.set && (
+                        <div className="column is-one-third-desktop is-one-third-tablet is-half-mobile">
+                          <div className="card-details_set">
+                            <p className="heading">Set</p>
+                            <p className="title is-5">
+                              <a
+                                className="is-flex is-align-items-center"
+                                href=""
+                              >
+                                {card.set.name}
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                      {card.number && card.set && (
+                        <div className="column is-one-third-desktop is-one-third-tablet is-half-mobile">
+                          <div className="card-details_number">
+                            <p className="heading">Number</p>
+                            <p className="title is-5">{card.number} / {card.set.printedTotal}</p>
+                          </div>
+                        </div>
+                      )}
                     </div>
+                    <button onClick={handleDownloadJSON}>Download JSON</button>
                   </section>
                 </div>
               </div>
