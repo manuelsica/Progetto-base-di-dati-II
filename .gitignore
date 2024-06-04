@@ -3,4 +3,6 @@ bd_venv/
 node_modules/.cache/default-development/4.pack
 node_modules/.cache/default-development/17.pack
 node_modules/.cache/
+node_modules/.cache/default-development/
+*.pack
 

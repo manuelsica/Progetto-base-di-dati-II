@@ -1000,7 +1000,6 @@ footer .wave#wave4 {
     border-radius: 15px;
     background-color: white;
     min-height: calc(100vh - 120px); /* Sottrai l'altezza del footer */
-    /* Assicurati di regolare i 120px in base all'altezza effettiva del tuo footer */
     display: flex;
     flex-direction: column;
 }
@@ -1008,7 +1007,7 @@ footer .wave#wave4 {
     .pagination-buttons{
         display: flex;
         justify-content: center;
-        gap: 16px; /* Add padding between buttons */
+        gap: 16px; 
         margin-top: 20px;
     }
   .cards-grid {
@@ -4750,6 +4749,9 @@ a.has-text-white:focus {
 .container_expansion {
     margin-top: 150px;
     margin-bottom: 150px;
+    min-height: calc(100vh - 120px); /* Sottrai l'altezza del footer */
+    display: flex;
+    flex-direction: column;
 }
 
 .series-group {

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App';
 import Login from './pages/Login';
 import Espansioni_page from './pages/Expansions';
+import EspansioniCarte from './pages/EspansioniCarte'; 
 import Carte from './pages/Cards_page';
 import CardDetails from './pages/CardDetails'; 
 
@@ -13,6 +14,7 @@ ReactDOM.render(
             <Route path="/" element={<App />} />
             <Route path="/login" element={<Login />} />
             <Route path="/Espansioni" element={<Espansioni_page />} />
+            <Route path="/expansion-cards/:setId" element={<EspansioniCarte />} />
             <Route path="/Carte" element={<Carte />} />
             <Route path="/card-details/:id" element={<CardDetails />} />
         </Routes>

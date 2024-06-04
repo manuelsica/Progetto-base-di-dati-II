@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Background from '../components/Background';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 
 const Espansioni_page = () => {
   const [sets, setSets] = useState([]);
@@ -30,25 +31,26 @@ const Espansioni_page = () => {
         <title>PokeDB - Espansioni</title>
       </Helmet>
       <Header />
-
       <div className='container_expansion'>
-          {Object.keys(groupedSets).map(series => (
-            <div key={series} className="series-group">
-              <h2>{series}</h2>
-              <div className="sets-grid">
-                {groupedSets[series].map(set => (
-                  <div key={set.id} className="set-card">
+        {Object.keys(groupedSets).map(series => (
+          <div key={series} className="series-group">
+            <h2>{series}</h2>
+            <div className="sets-grid">
+              {groupedSets[series].map(set => (
+                <div className="set-card">
+                <Link to={`/expansion-cards/${set.id}`} key={set.id}>
                     <img src={set.images.logo} alt={set.name} />
                     <div className="set-info">
                       <h3>{set.name}</h3>
                       <p>Release Date: {set.releaseDate}</p>
                     </div>
+                    </Link>
                   </div>
-                ))}
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
       <Footer />
     </>
   );
