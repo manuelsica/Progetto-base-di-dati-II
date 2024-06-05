@@ -8,7 +8,7 @@ const InfoCards = () => {
         <h2>Esplora tutte le carte</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque accumsan odio in felis faucibus, ut consectetur tortor iaculis...</p>
         <div className="buttons_1">
-          <MagicButton buttonText="Carte" navigateTo= ""/>
+          <MagicButton buttonText="Carte" navigateTo="/Carte" />
         </div>
       </div>
       <div className="imgBox">

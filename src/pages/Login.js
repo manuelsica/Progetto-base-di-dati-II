@@ -54,9 +54,9 @@ const Login = () => {
                 {generatedCode && <small className="generate_code">Codice generato!</small>}
                 <input type="text" placeholder="Codice Univoco" value={generatedCode} readOnly />
                 <div className="container_3" onClick={handleGenerateCode}>
-                  <MagicButton buttonText="Genera" />
+                  <MagicButton className="specialButton" buttonText="Genera" />
                 </div>
-                <MagicButton buttonText="Registrati" />
+                <MagicButton className="specialButton" buttonText="Registrati" />
               </form>
             </div>
             <div className="form-container sign-in">

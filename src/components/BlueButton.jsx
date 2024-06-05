@@ -1,7 +1,6 @@
 // src/components/MagicButton.jsx
 
 import React from 'react';
-import '../assets/css/blue.css';
 import circle from '../assets/images/circle.png';
 import { useNavigate  } from 'react-router-dom';
 

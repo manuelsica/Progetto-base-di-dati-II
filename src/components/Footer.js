@@ -12,6 +12,7 @@ const Footer = () => {
         <li><Link to = "/">Home</Link></li>
         <li><Link to = "/espansioni">Espansioni</Link></li>
         <li><Link to = "/carte">Carte</Link></li>
+        <li><Link to = "/deck">Deck</Link></li>
         <li><Link to = "/login">Login</Link></li>
         </ul>
         <p className="rights">©2024 PokeDB | All Rights Reserved</p>

@@ -16,12 +16,17 @@ import fighting from '../assets/images/fighting.png';
 import lightning from '../assets/images/lightning.png';
 import metal from '../assets/images/metal.png';
 import psychic from '../assets/images/psychic.png';
+import MagicButton from '../components/MagicButton';
 
 const CardDetails = () => {
   const { id } = useParams();
   const [card, setCard] = useState(null);
+  const [decks, setDecks] = useState([]);
+  const [selectedDeck, setSelectedDeck] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleDownloadJSON = () => {
+  /* const handleDownloadJSON = () => {
     const json = JSON.stringify(card, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -32,7 +37,7 @@ const CardDetails = () => {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-  };
+  }; */
 
   useEffect(() => {
     const fetchCardDetails = async () => {
@@ -48,8 +53,46 @@ const CardDetails = () => {
       }
     };
 
+    const fetchDecks = async () => {
+      try {
+        const response = await axios.get('');
+        setDecks(response.data);
+      } catch (error) {
+        console.error('Error fetching decks:', error);
+      }
+    };
+
     fetchCardDetails();
+    fetchDecks();
   }, [id]);
+
+  const handleAddToDeck = async () => {
+    try {
+      if (selectedDeck) {
+        await axios.post('');
+        setSuccessMessage('Carta aggiunta con successo!');
+        setErrorMessage('');
+      } else {
+        setErrorMessage('Seleziona un mazzo per aggiungere la carta.');
+        setSuccessMessage('');
+      }
+    } catch (error) {
+      console.error('Error adding card to deck:', error);
+      setErrorMessage('Errore durante l\'aggiunta della carta al mazzo.');
+      setSuccessMessage('');
+    }
+  };
+
+  const getPrice = () => {
+    const priceFields = ['normal', 'holofoil', 'reverseHolofoil', 'unlimited']; // Define i tipi di prezzi
+    for (let field of priceFields) {
+      const price = card.tcgplayer?.prices?.[field]?.mid || card.tcgplayer?.prices?.[field]?.high;
+      if (price !== null && price !== undefined) {
+        return price; // Restituisce il primo prezzo non nullo trovato
+      }
+    }
+    return 'N/A'; // Se nessun prezzo è disponibile
+  };
 
   if (!card) {
     return <div>Loading...</div>;
@@ -121,13 +164,8 @@ const CardDetails = () => {
                   <hr />
                   <section className="pt-0 mb-4">
                     <div className="is-flex is-align-items-center mb-4">
-                    <div className="title is-4 has-text-muted mb-0 mr-2">
-                        Prices: {
-                          card.tcgplayer?.prices?.unlimited?.mid ||
-                          card.tcgplayer?.prices?.unlimited?.high ||
-                          card.tcgplayer?.prices?.normal?.high ||
-                          'N/A'
-                        } euro
+                      <div className="title is-4 has-text-muted mb-0 mr-2">
+                        Prices: {getPrice()} euro
                       </div>
                     </div>
                   </section>
@@ -278,8 +316,26 @@ const CardDetails = () => {
                         </div>
                       )}
                     </div>
-                    <button onClick={handleDownloadJSON}>Download JSON</button>
+                    {/* <button onClick={handleDownloadJSON}>Download JSON</button> */}
                   </section>
+                  <section>
+                    <div className="add-to-deck">
+                      <div className="deck-select-wrapper">
+                        <select className='deck-select' value={selectedDeck} onChange={(e) => setSelectedDeck(e.target.value)}>
+                          <option value="">Seleziona un mazzo</option>
+                          {decks.map(deck => (
+                            <option key={deck.id} value={deck.id}>{deck.name}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className='button_deck'>
+                        <MagicButton buttonText='Aggiungi al mazzo' onClick={handleAddToDeck} />
+                      </div>
+                      {successMessage && <p className="success-message">{successMessage}</p>}
+                      {errorMessage && <p className="error-message">{errorMessage}</p>}
+                    </div>
+                  </section>
+
                 </div>
               </div>
             </div>

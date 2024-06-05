@@ -1,16 +1,15 @@
 // src/components/MagicButton.jsx
 
 import React from 'react';
-import '../assets/css/styles.css';
 import star from '../assets/images/star.png';
 import { useNavigate } from 'react-router-dom';
 
 const MagicButton = ({ buttonText, navigateTo, onClick, disabled }) => {
   let navigate = useNavigate();
-  const handleClick = () => {
+  const handleClick = (e) => {
     if (disabled) return; // Prevent action if disabled
     if (onClick) {
-      onClick();
+      onClick(e);
     }
     if (navigateTo) {
       navigate(navigateTo);

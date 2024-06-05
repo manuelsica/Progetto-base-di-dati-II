@@ -17,6 +17,7 @@ const Header = () => {
         <Link to = "/">Home</Link>
         <Link to = "/espansioni">Espansioni</Link>
         <Link to = "/carte">Carte</Link>
+        <Link to = "/Deck">Deck</Link>
         <Link to = "/login">Login</Link>
       </nav>
       <div className="hamburger" id="hamburger" onClick={toggleMenu}>

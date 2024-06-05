@@ -8,7 +8,7 @@ import Espansioni from './components/Espansioni';
 import InfoCards from './components/InfoCards';
 import Background from './components/Background';
 import Footer from './components/Footer';
-import './assets/css/index.css';
+import './assets/css/style.css';
 
 const App = () => {
   useEffect(() => {

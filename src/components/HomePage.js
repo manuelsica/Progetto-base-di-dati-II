@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Importa il componente Link
 import YellowButton from './YellowButton';
 
 const HomePage = () => {
@@ -10,8 +11,13 @@ const HomePage = () => {
           Esplora tutte le collezioni pokemon e tutte le sue carte! Componi il tuo mazzo
         </p>
         <div className="buttons">
-          <YellowButton buttonText="Espansioni" />
-          <YellowButton buttonText="Carte" />
+          {/* Utilizza il componente Link per creare il link alle pagine Espansioni_page e Cards_page */}
+          <Link to="/Espansioni" className="link">
+            <YellowButton buttonText="Espansioni" />
+          </Link>
+          <Link to="/Carte" className="link">
+            <YellowButton buttonText="Carte" />
+          </Link>
         </div>
       </div>
     </section>

@@ -18,16 +18,42 @@ const Carte = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
-  const [showPageInput, setShowPageInput] = useState(false);
-  const [inputPage, setInputPage] = useState('');
+  const [sets, setSets] = useState([]);
+  const [selectedSet, setSelectedSet] = useState('');
+  const [selectedType, setSelectedType] = useState('');
+  const [selectedSupertype, setSelectedSupertype] = useState('');
+
+  useEffect(() => {
+    // Fetch all sets for the dropdown
+    const fetchSets = async () => {
+      try {
+        const response = await axios.get('https://api.pokemontcg.io/v2/sets', {
+          headers: {
+            'X-Api-Key': 'dcd81c77-600b-4649-ae91-8a317c4cd62e'
+          }
+        });
+        setSets(response.data.data);
+      } catch (err) {
+        console.error('Error fetching sets:', err.message);
+      }
+    };
+
+    fetchSets();
+  }, []);
 
   useEffect(() => {
     const fetchTotalPages = async () => {
       try {
+        let query = [];
+        if (selectedSet) query.push(`set.id:${selectedSet}`);
+        if (selectedType) query.push(`types:${selectedType}`);
+        if (selectedSupertype) query.push(`supertype:${selectedSupertype}`);
+        if (search) query.push(`name:${search}*`);
+
         const response = await axios.get('https://api.pokemontcg.io/v2/cards', {
           params: {
             pageSize: 30,
-            q: search ? `name:${search}*` : undefined // Search query
+            q: query.join(' ')
           },
           headers: {
             'X-Api-Key': 'dcd81c77-600b-4649-ae91-8a317c4cd62e'
@@ -41,25 +67,31 @@ const Carte = () => {
     };
 
     fetchTotalPages();
-  }, [search]);
+  }, [search, selectedSet, selectedType, selectedSupertype]);
 
   useEffect(() => {
     const fetchCards = async () => {
       setLoading(true);
       setError(null);
       try {
+        let query = [];
+        if (selectedSet) query.push(`set.id:${selectedSet}`);
+        if (selectedType) query.push(`types:${selectedType}`);
+        if (selectedSupertype) query.push(`supertype:${selectedSupertype}`);
+        if (search) query.push(`name:${search}*`);
+
         const response = await axios.get('https://api.pokemontcg.io/v2/cards', {
           params: {
             pageSize: 30,
             page: page,
-            q: search ? `name:${search}*` : undefined // Search query
+            q: query.join(' ')
           },
           headers: {
             'X-Api-Key': 'dcd81c77-600b-4649-ae91-8a317c4cd62e'
           }
         });
 
-        const filteredCards = response.data.data.filter(card => new Date(card.set.releaseDate) <= new Date('2023-03-11'));
+        const filteredCards = response.data.data.filter(card => new Date(card.set.releaseDate) <= new Date('2023-11-03'));
 
         setCards(filteredCards);
 
@@ -76,11 +108,10 @@ const Carte = () => {
     };
 
     fetchCards();
-  }, [page, search]);
+  }, [page, search, selectedSet, selectedType, selectedSupertype]);
 
   const handlePageChange = (pageNum) => {
     setPage(pageNum);
-    setShowPageInput(false);
   };
 
   const handleSearchChange = (event) => {
@@ -89,6 +120,28 @@ const Carte = () => {
     setPage(1); // Reset to the first page
   };
 
+  const handleSetChange = (event) => {
+    setSelectedSet(event.target.value);
+    setPage(1); // Reset to the first page
+  };
+
+  const handleTypeChange = (event) => {
+    setSelectedType(event.target.value);
+    setPage(1); // Reset to the first page
+  };
+
+  const handleSupertypeChange = (event) => {
+    setSelectedSupertype(event.target.value);
+    setPage(1); // Reset to the first page
+  };
+
+  const resetFilters = () => {
+    setSelectedSet('');
+    setSelectedType('');
+    setSelectedSupertype('');
+    setSearch('');
+    setPage(1);
+  };
 
   return (
     <>
@@ -99,12 +152,46 @@ const Carte = () => {
       <Header />
       <div className="App">
         <h1>Pokemon Cards</h1>
-        <input
-          type="text"
-          placeholder="Search by name..."
-          value={search}
-          onChange={handleSearchChange}
-        />
+        <div className="search-container">
+          <input
+            type="text"
+            className='search-bar'
+            placeholder="Search by name..."
+            value={search}
+            onChange={handleSearchChange}
+          />
+          <div className="filters">
+            <select className = "select_filter" value={selectedSet} onChange={handleSetChange}>
+              <option value="">All Sets</option>
+              {sets.map(set => (
+                <option key={set.id} value={set.id}>{set.name}</option>
+              ))}
+            </select>
+            <select className = "select_filter" value={selectedType} onChange={handleTypeChange}>
+              <option value="">All Types</option>
+              <option value="Grass">Grass</option>
+              <option value="Fire">Fire</option>
+              <option value="Water">Water</option>
+              <option value="Lightning">Lightning</option>
+              <option value="Psychic">Psychic</option>
+              <option value="Fighting">Fighting</option>
+              <option value="Darkness">Darkness</option>
+              <option value="Metal">Metal</option>
+              <option value="Fairy">Fairy</option>
+              <option value="Colorless">Colorless</option>
+              <option value="Dragon">Dragon</option>
+            </select>
+            <select className = "select_filter" value={selectedSupertype} onChange={handleSupertypeChange}>
+              <option value="">All Supertypes</option>
+              <option value="Pokémon">Pokémon</option>
+              <option value="Trainer">Trainer</option>
+              <option value="Energy">Energy</option>
+            </select>
+            <div className='reset-button'>
+            <MagicButton buttonText="Reset Filters" onClick={resetFilters} />
+            </div>
+          </div>
+        </div>
         <div className="cards-grid">
           {loading ? (
             <p>Loading...</p>
@@ -136,7 +223,7 @@ const Carte = () => {
             <MagicButton 
               buttonText="Next"
               onClick={() => handlePageChange(page + 1)}
-              disabled={page >= totalPages || cards.length < 30}
+              disabled={page === totalPages || cards.length < 30}
             />
           </div>
         )}

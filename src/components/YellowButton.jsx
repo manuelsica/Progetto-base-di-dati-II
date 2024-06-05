@@ -1,7 +1,6 @@
 // src/components/MagicButton.jsx
 
 import React from 'react';
-import '../assets/css/yellow.css';
 import star from '../assets/images/star.png';
 import diamond from '../assets/images/diamond.png';
 import { useNavigate  } from 'react-router-dom';
