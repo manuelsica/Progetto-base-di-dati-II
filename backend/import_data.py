@@ -13,7 +13,7 @@ db = client["POKEDB"]
 cards_collection = db["cards"]
 
 # Importa il CSV
-cards_df = pd.read_csv('carte.csv')
+cards_df = pd.read_csv('backend/carte.csv')
 
 # Converti il DataFrame in un dizionario e inserisci i dati nel database
 cards_collection.insert_many(cards_df.to_dict('records'))

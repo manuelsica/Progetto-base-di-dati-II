@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
@@ -8,16 +8,14 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
-
-# Carica le variabili d'ambiente dal file .env
 load_dotenv()
+app.secret_key = os.getenv('SECRET_KEY', 'your_secret_key')
+
 MONGO_URI = 'mongodb://localhost:27017/'
 
-# Configura la connessione a MongoDB
 client = MongoClient(MONGO_URI)
 db = client["POKEDB"]
 
-# Collezioni
 users_collection = db["users"]
 decks_collection = db["decks"]
 cards_collection = db["cards"]
@@ -34,88 +32,52 @@ def generate_code():
 @app.route('/register', methods=['POST'])
 def register_user():
     data = request.get_json()
-    if 'number' not in data:
+    if 'code' not in data:
         return jsonify({"error": "Invalid data"}), 400
     
     user = {
-        "number": data['number'],
+        "code": int(data['code']),
         "decks": []
     }
     
     users_collection.insert_one(user)
     return jsonify({"message": "User registered successfully"}), 201
 
-@app.route('/decks', methods=['POST'])
-def create_deck():
+@app.route('/login', methods=['POST'])
+def login():
     data = request.get_json()
-    if 'user_id' not in data or 'deck_name' not in data or 'cards' not in data:
+    print(f"Login attempt with data: {data}")  # Log received data
+    if 'code' not in data:
         return jsonify({"error": "Invalid data"}), 400
     
-    deck = {
-        "user_id": ObjectId(data['user_id']),
-        "deck_name": data['deck_name'],
-        "cards": data['cards']
-    }
+    try:
+        code = int(data['code'])
+    except ValueError:
+        return jsonify({"error": "Code must be an integer"}), 400
     
-    result = decks_collection.insert_one(deck)
-    deck_id = result.inserted_id
-    users_collection.update_one(
-        {"_id": ObjectId(deck['user_id'])},
-        {"$push": {"decks": deck_id}}
-    )
-    
-    return jsonify({"message": "Deck created successfully", "deck_id": str(deck_id)}), 201
+    print(f"Converted code to int: {code}")  # Log converted code
+    user = users_collection.find_one({"code": code})
+    print(f"User found: {user}")  # Log found user
+    if user:
+        session['user_id'] = str(user['_id'])
+        print(f"User {user['_id']} logged in successfully.")  # Log successful login
+        print(f"Session created with user_id: {session['user_id']}")  # Log session creation
+        return jsonify({"success": True, "message": "Login successful", "session_id": session['user_id']}), 200
+    print(f"Failed login attempt with code: {code}")  # Log failed login
+    return jsonify({"success": False, "message": "Invalid code"}), 401
 
-@app.route('/users/<user_id>/decks', methods=['GET'])
-def get_user_decks(user_id):
-    user = users_collection.find_one({"_id": ObjectId(user_id)})
-    if not user:
-        return jsonify({"error": "User not found"}), 404
-    
-    user_decks = decks_collection.find({"user_id": ObjectId(user_id)})
-    decks = []
-    for deck in user_decks:
-        decks.append({
-            "deck_name": deck['deck_name'],
-            "cards": deck['cards']
-        })
-    
-    return jsonify(decks), 200
+@app.route('/check-login', methods=['POST'])
+def check_login():
+    user_id = session.get('user_id')
+    if user_id:
+        return jsonify({"loggedIn": True, "session_id": user_id})
+    return jsonify({"loggedIn": False})
 
-@app.route('/decks/<deck_id>', methods=['PUT'])
-def update_deck(deck_id):
-    data = request.get_json()
-    update_data = {}
-    
-    if 'deck_name' in data:
-        update_data['deck_name'] = data['deck_name']
-    if 'cards' in data:
-        update_data['cards'] = data['cards']
-    
-    decks_collection.update_one({"_id": ObjectId(deck_id)}, {"$set": update_data})
-    return jsonify({"message": "Deck updated successfully"}), 200
-
-@app.route('/decks/<deck_id>', methods=['DELETE'])
-def delete_deck(deck_id):
-    deck = decks_collection.find_one({"_id": ObjectId(deck_id)})
-    if not deck:
-        return jsonify({"error": "Deck not found"}), 404
-
-    decks_collection.delete_one({"_id": ObjectId(deck_id)})
-    users_collection.update_one(
-        {"_id": deck['user_id']},
-        {"$pull": {"decks": ObjectId(deck_id)}}
-    )
-    return jsonify({"message": "Deck deleted successfully"}), 200
-
-@app.route('/cards', methods=['GET'])
-def get_all_cards():
-    cards = cards_collection.find()
-    cards_list = []
-    for card in cards:
-        card['_id'] = str(card['_id'])  # Convert ObjectId to string
-        cards_list.append(card)
-    return jsonify(cards_list), 200
+@app.route('/logout', methods=['POST'])
+def logout():
+    session_id = session.pop('user_id', None)
+    print(f"Session ended for user_id: {session_id}")
+    return jsonify({"message": "Logout successful"})
 
 if __name__ == '__main__':
     app.run(debug=True)
