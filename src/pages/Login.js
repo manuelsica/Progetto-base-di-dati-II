@@ -69,7 +69,6 @@ const Login = () => {
     event.preventDefault();
     try {
       const code = loginCodeRef.current.value;
-      console.log("prima del fetch ")
       const response = await fetch('http://127.0.0.1:5000/login', {
         method: 'POST',
         headers: {
@@ -77,7 +76,6 @@ const Login = () => {
         },
         body: JSON.stringify({ code: parseInt(code) }),  // Ensure code is sent as integer
       });
-      console.log("dopo il fetchs")
       const data = await response.json();
       if (response.ok) {
         navigate('/');
