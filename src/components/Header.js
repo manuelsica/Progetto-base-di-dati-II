@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Menu } from 'react-ionicons';
 import logo from '../assets/images/logo.png';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -10,8 +9,12 @@ const Header = () => {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5000/check-login');
-        if (response.data.loggedIn) {
+        const response = await fetch('http://127.0.0.1:5000/check-login', {
+          method: 'POST',
+          credentials: 'include', // Include credentials (cookies)
+        });
+        const data = await response.json();
+        if (data.loggedIn) {
           setIsLoggedIn(true);
         }
       } catch (error) {
@@ -24,7 +27,10 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://127.0.0.1:5000/logout');
+      await fetch('http://127.0.0.1:5000/logout', {
+        method: 'POST',
+        credentials: 'include', // Include credentials (cookies)
+      });
       setIsLoggedIn(false);
       window.location.reload(); // Reload the page to update header
     } catch (error) {

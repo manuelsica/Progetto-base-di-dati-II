@@ -9,6 +9,10 @@ import EspansioniCarte from './pages/EspansioniCarte';
 import Carte from './pages/Cards_page';
 import CardDetails from './pages/CardDetails';
 import DeckDetails from './pages/DeckDetails';  // Import the new DeckDetails component
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
+
 
 ReactDOM.render(
     <Router>

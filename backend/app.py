@@ -6,10 +6,14 @@ import random
 from bson.objectid import ObjectId
 from flask_cors import CORS
 
-app = Flask(__name__)
-CORS(app)
+# Load environment variables from .env file
 load_dotenv()
-app.secret_key = os.getenv('SECRET_KEY', 'your_secret_key')
+
+app = Flask(__name__)
+CORS(app, supports_credentials=True)
+
+# Set the secret key from the environment variable
+app.secret_key = os.getenv('SECRET_KEY', 'default_secret_key')
 
 MONGO_URI = 'mongodb://localhost:27017/'
 
@@ -55,20 +59,21 @@ def login():
     except ValueError:
         return jsonify({"error": "Code must be an integer"}), 400
     
-    print(f"Converted code to int: {code}")  # Log converted code
+   
     user = users_collection.find_one({"code": code})
-    print(f"User found: {user}")  # Log found user
+    
     if user:
-        session['user_id'] = str(user['_id'])
-        print(f"User {user['_id']} logged in successfully.")  # Log successful login
+        session['user_id'] = user['code']
+        session.modified = True
         print(f"Session created with user_id: {session['user_id']}")  # Log session creation
         return jsonify({"success": True, "message": "Login successful", "session_id": session['user_id']}), 200
-    print(f"Failed login attempt with code: {code}")  # Log failed login
+
     return jsonify({"success": False, "message": "Invalid code"}), 401
 
 @app.route('/check-login', methods=['POST'])
 def check_login():
     user_id = session.get('user_id')
+    print(f"Session check, user_id: {user_id}")  # Improved logging
     if user_id:
         return jsonify({"loggedIn": True, "session_id": user_id})
     return jsonify({"loggedIn": False})
