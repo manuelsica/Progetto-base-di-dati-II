@@ -15,6 +15,7 @@ app.secret_key = "a6ba480e3683129499e34b02a106e078"
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_PERMANENT'] = False
 Session(app)
+
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 # Set the secret key from the environment variable
