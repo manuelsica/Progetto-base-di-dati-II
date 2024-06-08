@@ -5,15 +5,20 @@ import os
 import random
 from bson.objectid import ObjectId
 from flask_cors import CORS
+from flask_session import Session 
 
 # Load environment variables from .env file
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+app.secret_key = "a6ba480e3683129499e34b02a106e078"
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_PERMANENT'] = False
+Session(app)
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 # Set the secret key from the environment variable
-app.secret_key = os.getenv('SECRET_KEY', 'default_secret_key')
+
 
 MONGO_URI = 'mongodb://localhost:27017/'
 
@@ -23,6 +28,8 @@ db = client["POKEDB"]
 users_collection = db["users"]
 decks_collection = db["decks"]
 cards_collection = db["cards"]
+
+
 
 @app.route('/')
 def home():
@@ -63,26 +70,25 @@ def login():
     user = users_collection.find_one({"code": code})
     
     if user:
-        session['user_id'] = user['code']
-        session.modified = True
-        print(f"Session created with user_id: {session['user_id']}")  # Log session creation
-        return jsonify({"success": True, "message": "Login successful", "session_id": session['user_id']}), 200
+        session['user'] = user['code']
+        print(f"Session created with user_id: {session['user']}")  # Log session creation
+        return jsonify({"success": True, "message": "Login successful", "session_id": session['user']}), 200
 
     return jsonify({"success": False, "message": "Invalid code"}), 401
 
-@app.route('/check-login', methods=['POST'])
-def check_login():
-    user_id = session.get('user_id')
-    print(f"Session check, user_id: {user_id}")  # Improved logging
-    if user_id:
-        return jsonify({"loggedIn": True, "session_id": user_id})
-    return jsonify({"loggedIn": False})
+@app.route('/status', methods=['GET'])
+def status():
+    user = session.get('user')
+    print("Session", user)
+    if user:
+        return jsonify({'logged_in': True, 'user': user})
+    return jsonify({'logged_in': False})
+
 
 @app.route('/logout', methods=['POST'])
 def logout():
-    session_id = session.pop('user_id', None)
-    print(f"Session ended for user_id: {session_id}")
-    return jsonify({"message": "Logout successful"})
+    session.pop('user', None)
+    return jsonify({'message': 'Logout successful'})
 
 if __name__ == '__main__':
     app.run(debug=True)

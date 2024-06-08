@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Background from '../components/Background';
@@ -6,6 +6,9 @@ import Footer from '../components/Footer';
 import YellowButton from '../components/YellowButton';
 import MagicButton from '../components/MagicButton';
 import { Helmet } from 'react-helmet';
+
+
+
 
 const Login = () => {
   const [isActive, setIsActive] = useState(false);
@@ -78,6 +81,7 @@ const Login = () => {
       });
       const data = await response.json();
       if (response.ok) {
+        setLoginMessage(true)
         navigate('/');
       } else {
         setLoginMessage(data.message);

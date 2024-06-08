@@ -1,42 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Menu } from 'react-ionicons';
 import logo from '../assets/images/logo.png';
 import { Link } from 'react-router-dom';
+import axios from 'axios'
+
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginMessage, setLoginMessage] = useState('');
+
 
   useEffect(() => {
-    const checkLoginStatus = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:5000/check-login', {
-          method: 'POST',
-          credentials: 'include', // Include credentials (cookies)
-        });
-        const data = await response.json();
-        if (data.loggedIn) {
-          setIsLoggedIn(true);
-        }
-      } catch (error) {
-        console.error('Error checking login status:', error);
-      }
-    };
-
-    checkLoginStatus();
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      await fetch('http://127.0.0.1:5000/logout', {
-        method: 'POST',
-        credentials: 'include', // Include credentials (cookies)
+    fetch('http://127.0.0.1:5000/status', {
+      credentials: 'include'
+    })
+      .then(response => response.json())
+      .then(data => {
+        setLoginMessage(data.logged_in);
+      })
+      .catch(error => {
+        console.error('There was an error checking the login status!', error);
       });
-      setIsLoggedIn(false);
-      window.location.reload(); // Reload the page to update header
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
+  }, []);
+  
+    const handleLogout = () => {
+      axios.post('http://127.0.0.1:5000/logout', {}, { withCredentials: true })
+        .then(() => {
+          setLoginMessage(false);
+        })
+        .catch(error => {
+          console.error('There was an error logging out!', error);
+        });
+    };
+  
 
   const toggleMenu = () => {
     const nav = document.querySelector('header nav');
@@ -52,10 +47,10 @@ const Header = () => {
         <Link to="/">Home</Link>
         <Link to="/espansioni">Espansioni</Link>
         <Link to="/carte">Carte</Link>
-        {isLoggedIn ? (
+        {loginMessage ? (
           <>
             <span>Ciao Allenatore!</span>
-            <button onClick={handleLogout}>Logout</button>
+            <Link to="/" onClick={handleLogout}>Logout</Link>
           </>
         ) : (
           <Link to="/login">Login</Link>
