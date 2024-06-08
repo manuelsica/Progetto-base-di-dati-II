@@ -77,7 +77,7 @@ const DeckDetails = () => {
     }, []);
 
     useEffect(() => {
-        const fetchFilteredCards = async () => {
+        const fetchCards = async () => {
             try {
                 let filteredCards = originalCards;
                 if (search) {
@@ -99,7 +99,7 @@ const DeckDetails = () => {
             }
         };
 
-        fetchFilteredCards();
+        fetchCards();
     }, [selectedSet, selectedType, selectedSupertype, search, originalCards]);
 
     const getPrice = (card) => {

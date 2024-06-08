@@ -12,6 +12,7 @@ import ImagePreloader from './ImagePreloader';
 import MagicButton from '../components/MagicButton';
 
 axios.defaults.withCredentials = false;
+
 const Carte = () => {
   const [cards, setCards] = useState([]);
   const [page, setPage] = useState(1);
@@ -28,12 +29,8 @@ const Carte = () => {
     // Fetch all sets for the dropdown
     const fetchSets = async () => {
       try {
-        const response = await axios.get('https://api.pokemontcg.io/v2/sets', {
-          headers: {
-            'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
-          },
-          withCredentials: false
-        });
+        const response = await axios.get('http://127.0.0.1:5000/sets');
+        console.log('Sets response:', response);  // Debug log
         setSets(response.data.data);
       } catch (err) {
         console.error('Error fetching sets:', err.message);
@@ -47,22 +44,16 @@ const Carte = () => {
   useEffect(() => {
     const fetchTotalPages = async () => {
       try {
-        let query = [];
-        if (selectedSet) query.push(`set.id:${selectedSet}`);
-        if (selectedType) query.push(`types:${selectedType}`);
-        if (selectedSupertype) query.push(`supertype:${selectedSupertype}`);
-        if (search) query.push(`name:${search}*`);
-
-        const response = await axios.get('https://api.pokemontcg.io/v2/cards', {
+        const response = await axios.get('http://127.0.0.1:5000/cards', {
           params: {
             pageSize: 30,
-            q: query.join(' ')
-          },
-          headers: {
-            'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
-          },
-          withCredentials: false
+            search,
+            set: selectedSet,
+            type: selectedType,
+            supertype: selectedSupertype
+          }
         });
+        console.log('Total pages response:', response);  // Debug log
         const totalCards = response.data.totalCount;
         setTotalPages(Math.ceil(totalCards / 30));
       } catch (err) {
@@ -79,30 +70,36 @@ const Carte = () => {
       setLoading(true);
       setError(null);
       try {
-        let query = [];
-        if (selectedSet) query.push(`set.id:${selectedSet}`);
-        if (selectedType) query.push(`types:${selectedType}`);
-        if (selectedSupertype) query.push(`supertype:${selectedSupertype}`);
-        if (search) query.push(`name:${search}*`);
-
-        const response = await axios.get('https://api.pokemontcg.io/v2/cards', {
+        const response = await axios.get('http://127.0.0.1:5000/cards', {
           params: {
             pageSize: 30,
-            page: page,
-            q: query.join(' ')
-          },
-          headers: {
-            'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
-          },
-          withCredentials: false
+            page,
+            search,
+            set: selectedSet,
+            type: selectedType,
+            supertype: selectedSupertype
+          }
+        });
+        console.log('Cards response:', response);  // Debug log
+
+        const cards = response.data.data;
+        const cardDetailsPromises = cards.map(async (card) => {
+          const apiResponse = await axios.get(`https://api.pokemontcg.io/v2/cards/${card.id}`, {
+            headers: {
+              'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
+            }
+          });
+          return {
+            ...card,
+            images: apiResponse.data.data.images,
+            prices: apiResponse.data.data.cardmarket ? apiResponse.data.data.cardmarket.prices : {}
+          };
         });
 
-        const filteredCards = response.data.data.filter(card => new Date(card.set.releaseDate) <= new Date('2023-11-03'));
+        const detailedCards = await Promise.all(cardDetailsPromises);
+        setCards(detailedCards);
 
-        setCards(filteredCards);
-
-        // Adjust total pages if there are no cards on the current page
-        if (filteredCards.length === 0 && page > 1) {
+        if (detailedCards.length === 0 && page > 1) {
           setPage(page - 1);
         }
       } catch (err) {
@@ -167,13 +164,13 @@ const Carte = () => {
             onChange={handleSearchChange}
           />
           <div className="filters">
-            <select className = "select_filter" value={selectedSet} onChange={handleSetChange}>
+            <select className="select_filter" value={selectedSet} onChange={handleSetChange}>
               <option value="">All Sets</option>
               {sets.map(set => (
-                <option key={set.id} value={set.id}>{set.name}</option>
+                <option key={set} value={set}>{set}</option>
               ))}
             </select>
-            <select className = "select_filter" value={selectedType} onChange={handleTypeChange}>
+            <select className="select_filter" value={selectedType} onChange={handleTypeChange}>
               <option value="">All Types</option>
               <option value="Grass">Grass</option>
               <option value="Fire">Fire</option>
@@ -187,7 +184,7 @@ const Carte = () => {
               <option value="Colorless">Colorless</option>
               <option value="Dragon">Dragon</option>
             </select>
-            <select className = "select_filter" value={selectedSupertype} onChange={handleSupertypeChange}>
+            <select className="select_filter" value={selectedSupertype} onChange={handleSupertypeChange}>
               <option value="">All Supertypes</option>
               <option value="Pokémon">Pokémon</option>
               <option value="Trainer">Trainer</option>
