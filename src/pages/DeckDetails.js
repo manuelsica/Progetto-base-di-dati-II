@@ -7,10 +7,11 @@ import Footer from '../components/Footer';
 import MagicButton from '../components/MagicButton';
 import { Helmet } from 'react-helmet';
 
+axios.defaults.withCredentials = false;
 const DeckDetails = () => {
     const { id } = useParams();
     const [cards, setCards] = useState([]);
-    const [originalCards, setOriginalCards] = useState([]); // Stato per le carte originali
+    const [originalCards, setOriginalCards] = useState([]);
     const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
     const [totalDeckValue, setTotalDeckValue] = useState(0);
@@ -23,28 +24,27 @@ const DeckDetails = () => {
     useEffect(() => {
         const fetchDeck = async () => {
             try {
-                const response = await axios.get(`https://api.pokemontcg.io/v2/cards?name=pikachu&page=1&pageSize=100`);
-                const exampleCards = response.data.data;
-
-                const sortedCards = exampleCards.filter(card => {
-                    const price = getPrice(card);
-
-                    return !isNaN(price) && price !== 0;
-                }).sort((a, b) => {
-                    const priceA = getPrice(a);
-                    const priceB = getPrice(b);
-
-                    return priceB - priceA;
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`http://127.0.0.1:5000/decks/${id}/cards`, {
+                    headers: { Authorization: `Bearer ${token}` }
                 });
+                const cardIds = response.data.cards;
 
-                const selectedCards = sortedCards.slice(0, 60);
+                const cardDetailsPromises = cardIds.map(cardId => 
+                    axios.get(`https://api.pokemontcg.io/v2/cards/${cardId}`, {
+                        headers: {
+                            'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
+                        }
+                    })
+                );
+                const cardDetailsResponses = await Promise.all(cardDetailsPromises);
+                const fetchedCards = cardDetailsResponses.map(res => res.data.data);
 
-                setCards(selectedCards);
-                setOriginalCards(selectedCards); // Salva le carte originali nello stato separato
+                setCards(fetchedCards);
+                setOriginalCards(fetchedCards);
 
-                // Calcola il valore totale del mazzo una volta sola
                 let totalValue = 0;
-                selectedCards.forEach(card => {
+                fetchedCards.forEach(card => {
                     const price = getPrice(card);
                     if (price && price !== 'N/A') {
                         totalValue += parseFloat(price);
@@ -79,8 +79,7 @@ const DeckDetails = () => {
     useEffect(() => {
         const fetchFilteredCards = async () => {
             try {
-                // Filtriamo solo le carte presenti nella pagina corrente
-                let filteredCards = originalCards; // Usa le carte originali come base
+                let filteredCards = originalCards;
                 if (search) {
                     filteredCards = originalCards.filter(card => card.name.toLowerCase().includes(search.toLowerCase()));
                 }
@@ -104,7 +103,7 @@ const DeckDetails = () => {
     }, [selectedSet, selectedType, selectedSupertype, search, originalCards]);
 
     const getPrice = (card) => {
-        const priceFields = ['normal', 'holofoil', 'reverseHolofoil', 'unlimited'];
+        const priceFields = ['normal', 'holofoil', 'reverseHolofoil', 'unlimited', '1stEditionHolofoil', 'unlimitedHolofoil'];
         for (let field of priceFields) {
             const price = parseFloat(card.tcgplayer?.prices?.[field]?.mid || card.tcgplayer?.prices?.[field]?.high || 0);
             if (!isNaN(price) && price !== 0) {
@@ -125,10 +124,17 @@ const DeckDetails = () => {
 
     const removeCardFromDeck = async () => {
         try {
-            await axios.delete(`URL_DA_DEFINIRE`);
-            // Ripristina le carte originali
-            setCards(originalCards);
-            closeModal();
+            const token = localStorage.getItem('token');
+            await axios.delete(`http://127.0.0.1:5000/decks/${id}/cards/${selectedCard.id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setCards(cards.filter(card => card.id !== selectedCard.id));
+            setOriginalCards(originalCards.filter(card => card.id !== selectedCard.id));
+            const price = getPrice(selectedCard);
+            if (price && price !== 'N/A') {
+                setTotalDeckValue(prevValue => prevValue - parseFloat(price));
+            }
+            setIsRemoveModalOpen(false);
         } catch (error) {
             console.error('Error removing card from deck:', error);
         }
@@ -155,7 +161,7 @@ const DeckDetails = () => {
         setSelectedType('');
         setSelectedSupertype('');
         setSearch('');
-        setCards(originalCards); // Resetta le carte visualizzate alle carte originali
+        setCards(originalCards);
     };
 
     return (

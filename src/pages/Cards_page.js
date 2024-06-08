@@ -11,6 +11,7 @@ import PlaceHolder from '../assets/images/background.webp';
 import ImagePreloader from './ImagePreloader';
 import MagicButton from '../components/MagicButton';
 
+axios.defaults.withCredentials = false;
 const Carte = () => {
   const [cards, setCards] = useState([]);
   const [page, setPage] = useState(1);
@@ -29,12 +30,14 @@ const Carte = () => {
       try {
         const response = await axios.get('https://api.pokemontcg.io/v2/sets', {
           headers: {
-            'X-Api-Key': 'dcd81c77-600b-4649-ae91-8a317c4cd62e'
-          }
+            'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
+          },
+          withCredentials: false
         });
         setSets(response.data.data);
       } catch (err) {
         console.error('Error fetching sets:', err.message);
+        setError('Error fetching sets');
       }
     };
 
@@ -56,13 +59,15 @@ const Carte = () => {
             q: query.join(' ')
           },
           headers: {
-            'X-Api-Key': 'dcd81c77-600b-4649-ae91-8a317c4cd62e'
-          }
+            'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
+          },
+          withCredentials: false
         });
         const totalCards = response.data.totalCount;
         setTotalPages(Math.ceil(totalCards / 30));
       } catch (err) {
         console.error('Error fetching total pages:', err.message);
+        setError('Error fetching total pages');
       }
     };
 
@@ -87,8 +92,9 @@ const Carte = () => {
             q: query.join(' ')
           },
           headers: {
-            'X-Api-Key': 'dcd81c77-600b-4649-ae91-8a317c4cd62e'
-          }
+            'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
+          },
+          withCredentials: false
         });
 
         const filteredCards = response.data.data.filter(card => new Date(card.set.releaseDate) <= new Date('2023-11-03'));
@@ -101,7 +107,7 @@ const Carte = () => {
         }
       } catch (err) {
         console.error('Error fetching cards:', err.message);
-        setError(err.message);
+        setError('Error fetching cards');
       } finally {
         setLoading(false);
       }
@@ -188,7 +194,7 @@ const Carte = () => {
               <option value="Energy">Energy</option>
             </select>
             <div className='reset-button'>
-            <MagicButton buttonText="Reset Filters" onClick={resetFilters} />
+              <MagicButton buttonText="Reset Filters" onClick={resetFilters} />
             </div>
           </div>
         </div>

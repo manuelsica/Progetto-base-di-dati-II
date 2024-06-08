@@ -12,6 +12,8 @@ import ImagePreloader from './ImagePreloader';
 import MagicButton from '../components/MagicButton';
 import { Link } from 'react-router-dom';
 
+
+axios.defaults.withCredentials = false;
 const Espansioni_Carte = () => {
     const { setId } = useParams();
     const [cards, setCards] = useState([]);
@@ -31,7 +33,7 @@ const Espansioni_Carte = () => {
             try {
                 const response = await axios.get(`https://api.pokemontcg.io/v2/sets/${setId}`, {
                     headers: {
-                        'X-Api-Key': 'dcd81c77-600b-4649-ae91-8a317c4cd62e'
+                        'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
                     }
                 });
                 setSetName(response.data.data.name); // Fix data access
@@ -52,7 +54,7 @@ const Espansioni_Carte = () => {
                         q: `set.id:${setId}` + (search ? ` name:${search}*` : '') // Filter by set ID and search query
                     },
                     headers: {
-                        'X-Api-Key': 'dcd81c77-600b-4649-ae91-8a317c4cd62e'
+                        'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
                     }
                 });
                 const totalCards = response.data.totalCount;
@@ -79,7 +81,7 @@ const Espansioni_Carte = () => {
                             (selectedSupertype ? ` supertype:${selectedSupertype}` : '') // Filter by set ID and search query
                     },
                     headers: {
-                        'X-Api-Key': 'dcd81c77-600b-4649-ae91-8a317c4cd62e'
+                        'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
                     }
                 });
 

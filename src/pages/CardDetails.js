@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../components/Header';
 import { Helmet } from 'react-helmet';
@@ -18,6 +18,7 @@ import metal from '../assets/images/metal.png';
 import psychic from '../assets/images/psychic.png';
 import MagicButton from '../components/MagicButton';
 
+axios.defaults.withCredentials = false;
 const CardDetails = () => {
   const { id } = useParams();
   const [card, setCard] = useState(null);
@@ -25,8 +26,10 @@ const CardDetails = () => {
   const [selectedDeck, setSelectedDeck] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
-  /* const handleDownloadJSON = () => {
+  const handleDownloadJSON = () => {
     const json = JSON.stringify(card, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -37,14 +40,14 @@ const CardDetails = () => {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-  }; */
+  };
 
   useEffect(() => {
     const fetchCardDetails = async () => {
       try {
         const response = await axios.get(`https://api.pokemontcg.io/v2/cards/${id}`, {
           headers: {
-            'X-Api-Key': 'dcd81c77-600b-4649-ae91-8a317c4cd62e'
+            'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
           }
         });
         setCard(response.data.data);
@@ -55,8 +58,14 @@ const CardDetails = () => {
 
     const fetchDecks = async () => {
       try {
-        const response = await axios.get('');
-        setDecks(response.data);
+        const token = localStorage.getItem('token');
+        if (token) {
+          setIsLoggedIn(true);
+          const response = await axios.get('http://127.0.0.1:5000/decks', {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          setDecks(response.data);
+        }
       } catch (error) {
         console.error('Error fetching decks:', error);
       }
@@ -69,8 +78,11 @@ const CardDetails = () => {
   const handleAddToDeck = async () => {
     try {
       if (selectedDeck) {
-        await axios.post('');
-        setSuccessMessage('Carta aggiunta con successo!');
+        const token = localStorage.getItem('token');
+        const response = await axios.post(`http://127.0.0.1:5000/decks/${selectedDeck}/cards`, { cardId: card.id }, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setSuccessMessage(`Carta ${card.name} aggiunta al mazzo ${decks.find(deck => deck.id === parseInt(selectedDeck)).name}`);
         setErrorMessage('');
       } else {
         setErrorMessage('Seleziona un mazzo per aggiungere la carta.');
@@ -78,20 +90,20 @@ const CardDetails = () => {
       }
     } catch (error) {
       console.error('Error adding card to deck:', error);
-      setErrorMessage('Errore durante l\'aggiunta della carta al mazzo.');
+      setErrorMessage(error.response?.data?.message || 'Errore durante l\'aggiunta della carta al mazzo.');
       setSuccessMessage('');
     }
   };
 
   const getPrice = () => {
-    const priceFields = ['normal', 'holofoil', 'reverseHolofoil', 'unlimited']; // Define i tipi di prezzi
+    const priceFields = ['normal', 'holofoil', 'reverseHolofoil', 'unlimited', '1stEditionHolofoil', 'unlimitedHolofoil'];
     for (let field of priceFields) {
       const price = card.tcgplayer?.prices?.[field]?.mid || card.tcgplayer?.prices?.[field]?.high;
       if (price !== null && price !== undefined) {
-        return price; // Restituisce il primo prezzo non nullo trovato
+        return price;
       }
     }
-    return 'N/A'; // Se nessun prezzo è disponibile
+    return 'N/A';
   };
 
   if (!card) {
@@ -316,26 +328,31 @@ const CardDetails = () => {
                         </div>
                       )}
                     </div>
-                    {/* <button onClick={handleDownloadJSON}>Download JSON</button> */}
+                    <button onClick={handleDownloadJSON}>Download JSON</button>
                   </section>
                   <section>
-                    <div className="add-to-deck">
-                      <div className="deck-select-wrapper">
-                        <select className='deck-select' value={selectedDeck} onChange={(e) => setSelectedDeck(e.target.value)}>
-                          <option value="">Seleziona un mazzo</option>
-                          {decks.map(deck => (
-                            <option key={deck.id} value={deck.id}>{deck.name}</option>
-                          ))}
-                        </select>
+                    {isLoggedIn ? (
+                      <div className="add-to-deck">
+                        <div className="deck-select-wrapper">
+                          <select className='deck-select' value={selectedDeck} onChange={(e) => setSelectedDeck(e.target.value)}>
+                            <option value="">Seleziona un mazzo</option>
+                            {decks.map(deck => (
+                              <option key={deck.id} value={deck.id}>{deck.name}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className='button_deck'>
+                          <MagicButton buttonText='Aggiungi al mazzo' onClick={handleAddToDeck} />
+                        </div>
+                        {successMessage && <p className="success-message">{successMessage}</p>}
+                        {errorMessage && <p className="error-message"><small>{errorMessage}</small></p>}
                       </div>
-                      <div className='button_deck'>
-                        <MagicButton buttonText='Aggiungi al mazzo' onClick={handleAddToDeck} />
+                    ) : (
+                      <div className="add-to-deck">
+                        <MagicButton buttonText='Effettua login' onClick={() => navigate('/login')} />
                       </div>
-                      {successMessage && <p className="success-message">{successMessage}</p>}
-                      {errorMessage && <p className="error-message">{errorMessage}</p>}
-                    </div>
+                    )}
                   </section>
-
                 </div>
               </div>
             </div>
