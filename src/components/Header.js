@@ -1,37 +1,34 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu } from 'react-ionicons';
 import logo from '../assets/images/logo.png';
 import { Link } from 'react-router-dom';
-import axios from 'axios'
-
+import axios from 'axios';
 
 const Header = () => {
-  const [loginMessage, setLoginMessage] = useState('');
-
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/status', {
-      credentials: 'include'
-    })
-      .then(response => response.json())
-      .then(data => {
-        setLoginMessage(data.logged_in);
+    const token = localStorage.getItem('token');
+    if (token) {
+      axios.get('http://127.0.0.1:5000/status', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(response => {
+        console.log("Status check response:", response.data);  // Debug print
+        setLoggedIn(response.data.logged_in);
       })
       .catch(error => {
         console.error('There was an error checking the login status!', error);
+        setLoggedIn(false);
       });
+    }
   }, []);
-  
-    const handleLogout = () => {
-      axios.post('http://127.0.0.1:5000/logout', {}, { withCredentials: true })
-        .then(() => {
-          setLoginMessage(false);
-        })
-        .catch(error => {
-          console.error('There was an error logging out!', error);
-        });
-    };
-  
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setLoggedIn(false);
+    console.log("User logged out");  // Debug print
+  };
 
   const toggleMenu = () => {
     const nav = document.querySelector('header nav');
@@ -42,14 +39,14 @@ const Header = () => {
 
   return (
     <header>
-      <Link to="/"><a href="/" className="logo"><img src={logo} alt="MyLogo" /></a></Link>
+       <Link to="/"><a href="/" className="logo"><img src={logo} alt="MyLogo" /></a></Link>
       <nav id="navbar">
         <Link to="/">Home</Link>
         <Link to="/espansioni">Espansioni</Link>
         <Link to="/carte">Carte</Link>
-        {loginMessage ? (
+        {loggedIn ? (
           <>
-            <span>Ciao Allenatore!</span>
+            <Link to="/deck">Deck</Link>
             <Link to="/" onClick={handleLogout}>Logout</Link>
           </>
         ) : (

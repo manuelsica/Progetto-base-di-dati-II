@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Background from '../components/Background';
@@ -6,9 +6,6 @@ import Footer from '../components/Footer';
 import YellowButton from '../components/YellowButton';
 import MagicButton from '../components/MagicButton';
 import { Helmet } from 'react-helmet';
-
-
-
 
 const Login = () => {
   const [isActive, setIsActive] = useState(false);
@@ -39,7 +36,7 @@ const Login = () => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      console.log('Generated Code:', data.code);
+      console.log('Generated Code:', data.code);  // Debug print
       setGeneratedCode(data.code);
     } catch (error) {
       console.error('Error generating code:', error);
@@ -60,7 +57,7 @@ const Login = () => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      console.log('Registration successful:', data.message);
+      console.log('Registration successful:', data.message);  // Debug print
       setConfirmationMessage('Ti sei registrato');
     } catch (error) {
       console.error('Error registering user:', error);
@@ -81,11 +78,13 @@ const Login = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        setLoginMessage(true)
+        console.log("Login successful, response:", data);  // Debug print
+        localStorage.setItem('token', data.access_token);
+        setLoginMessage('Login successful');
         navigate('/');
       } else {
+        console.error('Login failed:', data.message);  // Debug print
         setLoginMessage(data.message);
-        console.error('Login failed:', data.message);
       }
     } catch (error) {
       console.error('Error logging in:', error);
@@ -121,7 +120,7 @@ const Login = () => {
                 <h1>Login</h1>
                 <input type="text" name="code" placeholder="Codice univoco" ref={loginCodeRef} />
                 <div className="container_3" onClick={handleLogin}>
-                <MagicButton buttonText="Login" />
+                  <MagicButton buttonText="Login" />
                 </div>
                 {loginMessage && <small className="generate_code">{loginMessage}</small>}
               </form>
