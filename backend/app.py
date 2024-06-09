@@ -30,6 +30,7 @@ client = MongoClient(MONGO_URI)
 db = client["POKEDB"]
 users_collection = db["users"]
 cards_collection = db["cards"]
+sets_collection = db["sets"]
 
 # Helper function to convert MongoDB documents to JSON serializable format
 def json_serializable(doc):
@@ -248,7 +249,7 @@ def get_cards():
 @app.route('/sets', methods=['GET'])
 def get_sets():
     try:
-        sets = db.cards.distinct('set')
+        sets = sets_collection.distinct('name')
         return jsonify({'data': sets})
     except Exception as e:
         print(f"Error: {str(e)}")  # Debug log

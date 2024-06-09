@@ -1,0 +1,161 @@
+id,name,series,printedTotal,total,legalities,ptcgoCode,releaseDate,updatedAt,symbol,logo
+base1,Base,Base,102,102,unlimited,BS,1999/01/09,2022/10/10 15:12:00,https://images.pokemontcg.io/base1/symbol.png,https://images.pokemontcg.io/base1/logo.png
+base2,Jungle,Base,64,64,unlimited,JU,1999/06/16,2020/08/14 09:35:00,https://images.pokemontcg.io/base2/symbol.png,https://images.pokemontcg.io/base2/logo.png
+basep,Wizards Black Star Promos,Base,53,53,unlimited,PR,1999/07/01,2020/08/14 09:35:00,https://images.pokemontcg.io/basep/symbol.png,https://images.pokemontcg.io/basep/logo.png
+base3,Fossil,Base,62,62,unlimited,FO,1999/10/10,2020/08/14 09:35:00,https://images.pokemontcg.io/base3/symbol.png,https://images.pokemontcg.io/base3/logo.png
+base4,Base Set 2,Base,130,130,unlimited,B2,2000/02/24,2022/10/10 15:12:00,https://images.pokemontcg.io/base4/symbol.png,https://images.pokemontcg.io/base4/logo.png
+base5,Team Rocket,Base,82,83,unlimited,TR,2000/04/24,2020/08/14 09:35:00,https://images.pokemontcg.io/base5/symbol.png,https://images.pokemontcg.io/base5/logo.png
+gym1,Gym Heroes,Gym,132,132,unlimited,G1,2000/08/14,2022/10/10 15:12:00,https://images.pokemontcg.io/gym1/symbol.png,https://images.pokemontcg.io/gym1/logo.png
+gym2,Gym Challenge,Gym,132,132,unlimited,G2,2000/10/16,2022/10/10 15:12:00,https://images.pokemontcg.io/gym2/symbol.png,https://images.pokemontcg.io/gym2/logo.png
+neo1,Neo Genesis,Neo,111,111,unlimited,N1,2000/12/16,2022/10/10 15:12:00,https://images.pokemontcg.io/neo1/symbol.png,https://images.pokemontcg.io/neo1/logo.png
+neo2,Neo Discovery,Neo,75,75,unlimited,N2,2001/06/01,2020/08/14 09:35:00,https://images.pokemontcg.io/neo2/symbol.png,https://images.pokemontcg.io/neo2/logo.png
+si1,Southern Islands,Other,18,18,unlimited,,2001/07/31,2019/01/28 16:44:00,https://images.pokemontcg.io/si1/symbol.png,https://images.pokemontcg.io/si1/logo.png
+neo3,Neo Revelation,Neo,64,66,unlimited,N3,2001/09/21,2020/08/14 09:35:00,https://images.pokemontcg.io/neo3/symbol.png,https://images.pokemontcg.io/neo3/logo.png
+neo4,Neo Destiny,Neo,105,113,unlimited,N4,2002/02/28,2020/09/25 10:09:00,https://images.pokemontcg.io/neo4/symbol.png,https://images.pokemontcg.io/neo4/logo.png
+base6,Legendary Collection,Other,110,110,unlimited,LC,2002/05/24,2020/08/14 09:35:00,https://images.pokemontcg.io/base6/symbol.png,https://images.pokemontcg.io/base6/logo.png
+ecard1,Expedition Base Set,E-Card,165,165,unlimited,EX,2002/09/15,2022/10/10 15:12:00,https://images.pokemontcg.io/ecard1/symbol.png,https://images.pokemontcg.io/ecard1/logo.png
+ecard2,Aquapolis,E-Card,147,182,unlimited,AQ,2003/01/15,2020/08/14 09:35:00,https://images.pokemontcg.io/ecard2/symbol.png,https://images.pokemontcg.io/ecard2/logo.png
+ecard3,Skyridge,E-Card,144,182,unlimited,SK,2003/05/12,2020/08/14 09:35:00,https://images.pokemontcg.io/ecard3/symbol.png,https://images.pokemontcg.io/ecard3/logo.png
+ex1,Ruby & Sapphire,EX,109,109,unlimited,RS,2003/07/01,2018/03/04 10:35:00,https://images.pokemontcg.io/ex1/symbol.png,https://images.pokemontcg.io/ex1/logo.png
+ex2,Sandstorm,EX,100,100,unlimited,SS,2003/09/18,2018/03/04 10:35:00,https://images.pokemontcg.io/ex2/symbol.png,https://images.pokemontcg.io/ex2/logo.png
+ex3,Dragon,EX,97,100,unlimited,DR,2003/11/24,2023/02/16 05:47:00,https://images.pokemontcg.io/ex3/symbol.png,https://images.pokemontcg.io/ex3/logo.png
+np,Nintendo Black Star Promos,NP,40,40,unlimited,PR-NP,2003/10/01,2020/05/01 16:06:00,https://images.pokemontcg.io/np/symbol.png,https://images.pokemontcg.io/np/logo.png
+ex4,Team Magma vs Team Aqua,EX,95,97,unlimited,MA,2004/03/01,2019/01/28 16:44:00,https://images.pokemontcg.io/ex4/symbol.png,https://images.pokemontcg.io/ex4/logo.png
+ex5,Hidden Legends,EX,101,102,unlimited,HL,2004/06/01,2019/01/28 16:44:00,https://images.pokemontcg.io/ex5/symbol.png,https://images.pokemontcg.io/ex5/logo.png
+ex6,FireRed & LeafGreen,EX,112,116,unlimited,RG,2004/09/01,2019/01/28 16:44:00,https://images.pokemontcg.io/ex6/symbol.png,https://images.pokemontcg.io/ex6/logo.png
+pop1,POP Series 1,POP,17,17,unlimited,,2004/09/01,2018/03/04 10:35:00,https://images.pokemontcg.io/pop1/symbol.png,https://images.pokemontcg.io/pop1/logo.png
+ex7,Team Rocket Returns,EX,109,111,unlimited,TRR,2004/11/01,2019/01/28 16:44:00,https://images.pokemontcg.io/ex7/symbol.png,https://images.pokemontcg.io/ex7/logo.png
+ex8,Deoxys,EX,107,108,unlimited,DX,2005/02/01,2019/01/28 16:44:00,https://images.pokemontcg.io/ex8/symbol.png,https://images.pokemontcg.io/ex8/logo.png
+ex9,Emerald,EX,106,107,unlimited,EM,2005/05/01,2020/02/08 09:00:00,https://images.pokemontcg.io/ex9/symbol.png,https://images.pokemontcg.io/ex9/logo.png
+ex10,Unseen Forces,EX,115,145,unlimited,UF,2005/08/01,2020/08/14 09:35:00,https://images.pokemontcg.io/ex10/symbol.png,https://images.pokemontcg.io/ex10/logo.png
+pop2,POP Series 2,POP,17,17,unlimited,,2005/08/01,2018/03/04 10:35:00,https://images.pokemontcg.io/pop2/symbol.png,https://images.pokemontcg.io/pop2/logo.png
+ex11,Delta Species,EX,113,114,unlimited,DS,2005/10/31,2020/05/01 16:06:00,https://images.pokemontcg.io/ex11/symbol.png,https://images.pokemontcg.io/ex11/logo.png
+ex12,Legend Maker,EX,92,93,unlimited,LM,2006/02/01,2018/03/04 10:35:00,https://images.pokemontcg.io/ex12/symbol.png,https://images.pokemontcg.io/ex12/logo.png
+pop3,POP Series 3,POP,17,17,unlimited,,2006/04/01,2020/08/14 09:35:00,https://images.pokemontcg.io/pop3/symbol.png,https://images.pokemontcg.io/pop3/logo.png
+ex13,Holon Phantoms,EX,110,111,unlimited,HP,2006/05/01,2018/03/04 10:35:00,https://images.pokemontcg.io/ex13/symbol.png,https://images.pokemontcg.io/ex13/logo.png
+ex14,Crystal Guardians,EX,100,100,unlimited,CG,2006/08/01,2018/03/04 10:35:00,https://images.pokemontcg.io/ex14/symbol.png,https://images.pokemontcg.io/ex14/logo.png
+pop4,POP Series 4,POP,17,17,unlimited,,2006/08/01,2020/08/14 09:35:00,https://images.pokemontcg.io/pop4/symbol.png,https://images.pokemontcg.io/pop4/logo.png
+ex15,Dragon Frontiers,EX,101,101,unlimited,DF,2006/11/01,2020/08/14 09:35:00,https://images.pokemontcg.io/ex15/symbol.png,https://images.pokemontcg.io/ex15/logo.png
+pop5,POP Series 5,POP,17,17,unlimited,,2007/03/01,2020/08/14 09:35:00,https://images.pokemontcg.io/pop5/symbol.png,https://images.pokemontcg.io/pop5/logo.png
+ex16,Power Keepers,EX,108,108,unlimited,PK,2007/02/02,2018/03/04 10:35:00,https://images.pokemontcg.io/ex16/symbol.png,https://images.pokemontcg.io/ex16/logo.png
+dp1,Diamond & Pearl,Diamond & Pearl,130,130,unlimited,DP,2007/05/01,2020/08/14 09:35:00,https://images.pokemontcg.io/dp1/symbol.png,https://images.pokemontcg.io/dp1/logo.png
+dpp,DP Black Star Promos,Diamond & Pearl,56,56,unlimited,PR-DPP,2007/05/01,2020/08/14 09:35:00,https://images.pokemontcg.io/dpp/symbol.png,https://images.pokemontcg.io/dpp/logo.png
+dp2,Mysterious Treasures,Diamond & Pearl,123,124,unlimited,MT,2007/08/01,2018/03/04 10:35:00,https://images.pokemontcg.io/dp2/symbol.png,https://images.pokemontcg.io/dp2/logo.png
+pop6,POP Series 6,POP,17,17,unlimited,,2007/09/01,2020/05/01 16:06:00,https://images.pokemontcg.io/pop6/symbol.png,https://images.pokemontcg.io/pop6/logo.png
+dp3,Secret Wonders,Diamond & Pearl,132,132,unlimited,SW,2007/11/01,2018/03/04 10:35:00,https://images.pokemontcg.io/dp3/symbol.png,https://images.pokemontcg.io/dp3/logo.png
+dp4,Great Encounters,Diamond & Pearl,106,106,unlimited,GE,2008/02/01,2018/03/04 10:35:00,https://images.pokemontcg.io/dp4/symbol.png,https://images.pokemontcg.io/dp4/logo.png
+pop7,POP Series 7,POP,17,17,unlimited,,2008/03/01,2018/03/04 10:35:00,https://images.pokemontcg.io/pop7/symbol.png,https://images.pokemontcg.io/pop7/logo.png
+dp5,Majestic Dawn,Diamond & Pearl,100,100,unlimited,MD,2008/05/01,2018/03/04 10:35:00,https://images.pokemontcg.io/dp5/symbol.png,https://images.pokemontcg.io/dp5/logo.png
+dp6,Legends Awakened,Diamond & Pearl,146,146,unlimited,LA,2008/08/01,2018/03/04 10:35:00,https://images.pokemontcg.io/dp6/symbol.png,https://images.pokemontcg.io/dp6/logo.png
+pop8,POP Series 8,POP,17,17,unlimited,,2008/09/01,2018/03/04 10:35:00,https://images.pokemontcg.io/pop8/symbol.png,https://images.pokemontcg.io/pop8/logo.png
+dp7,Stormfront,Diamond & Pearl,100,106,unlimited,SF,2008/11/01,2020/05/01 16:06:00,https://images.pokemontcg.io/dp7/symbol.png,https://images.pokemontcg.io/dp7/logo.png
+pl1,Platinum,Platinum,127,133,unlimited,PL,2009/02/11,2020/08/14 09:35:00,https://images.pokemontcg.io/pl1/symbol.png,https://images.pokemontcg.io/pl1/logo.png
+pop9,POP Series 9,POP,17,17,unlimited,,2009/03/01,2020/05/01 16:06:00,https://images.pokemontcg.io/pop9/symbol.png,https://images.pokemontcg.io/pop9/logo.png
+pl2,Rising Rivals,Platinum,111,120,unlimited,RR,2009/05/16,2020/08/14 09:35:00,https://images.pokemontcg.io/pl2/symbol.png,https://images.pokemontcg.io/pl2/logo.png
+pl3,Supreme Victors,Platinum,147,153,unlimited,SV,2009/08/19,2018/03/07 22:40:00,https://images.pokemontcg.io/pl3/symbol.png,https://images.pokemontcg.io/pl3/logo.png
+pl4,Arceus,Platinum,99,111,unlimited,AR,2009/11/04,2021/07/15 11:30:00,https://images.pokemontcg.io/pl4/symbol.png,https://images.pokemontcg.io/pl4/logo.png
+ru1,Pokémon Rumble,Other,16,16,unlimited,,2009/12/02,2019/01/28 16:44:00,https://images.pokemontcg.io/ru1/symbol.png,https://images.pokemontcg.io/ru1/logo.png
+hgss1,HeartGold & SoulSilver,HeartGold & SoulSilver,123,124,unlimited,HS,2010/02/10,2018/03/04 10:35:00,https://images.pokemontcg.io/hgss1/symbol.png,https://images.pokemontcg.io/hgss1/logo.png
+hsp,HGSS Black Star Promos,HeartGold & SoulSilver,25,25,unlimited,PR-HS,2010/02/10,2019/01/28 16:44:00,https://images.pokemontcg.io/hsp/symbol.png,https://images.pokemontcg.io/hsp/logo.png
+hgss2,HS—Unleashed,HeartGold & SoulSilver,95,96,unlimited,UL,2010/05/12,2018/03/04 10:35:00,https://images.pokemontcg.io/hgss2/symbol.png,https://images.pokemontcg.io/hgss2/logo.png
+hgss3,HS—Undaunted,HeartGold & SoulSilver,90,91,unlimited,UD,2010/08/18,2018/03/04 10:35:00,https://images.pokemontcg.io/hgss3/symbol.png,https://images.pokemontcg.io/hgss3/logo.png
+hgss4,HS—Triumphant,HeartGold & SoulSilver,102,103,unlimited,TM,2010/11/03,2018/03/04 10:35:00,https://images.pokemontcg.io/hgss4/symbol.png,https://images.pokemontcg.io/hgss4/logo.png
+col1,Call of Legends,HeartGold & SoulSilver,95,106,unlimited,CL,2011/02/09,2018/03/04 10:35:00,https://images.pokemontcg.io/col1/symbol.png,https://images.pokemontcg.io/col1/logo.png
+bwp,BW Black Star Promos,Black & White,101,101,"unlimited, expanded",PR-BLW,2011/03/01,2020/08/14 09:35:00,https://images.pokemontcg.io/bwp/symbol.png,https://images.pokemontcg.io/bwp/logo.png
+bw1,Black & White,Black & White,114,115,"unlimited, expanded",BLW,2011/04/25,2018/11/29 19:56:00,https://images.pokemontcg.io/bw1/symbol.png,https://images.pokemontcg.io/bw1/logo.png
+mcd11,McDonald's Collection 2011,Other,12,12,"unlimited, expanded",,2011/06/17,2022/10/10 15:12:00,https://images.pokemontcg.io/mcd11/symbol.png,https://images.pokemontcg.io/mcd11/logo.png
+bw2,Emerging Powers,Black & White,98,98,"unlimited, expanded",EPO,2011/08/31,2018/03/04 10:35:00,https://images.pokemontcg.io/bw2/symbol.png,https://images.pokemontcg.io/bw2/logo.png
+bw3,Noble Victories,Black & White,101,102,"unlimited, expanded",NVI,2011/11/16,2018/03/04 10:35:00,https://images.pokemontcg.io/bw3/symbol.png,https://images.pokemontcg.io/bw3/logo.png
+bw4,Next Destinies,Black & White,99,103,"unlimited, expanded",NXD,2012/02/08,2019/01/28 16:44:00,https://images.pokemontcg.io/bw4/symbol.png,https://images.pokemontcg.io/bw4/logo.png
+bw5,Dark Explorers,Black & White,108,111,"unlimited, expanded",DEX,2012/05/09,2018/03/04 10:35:00,https://images.pokemontcg.io/bw5/symbol.png,https://images.pokemontcg.io/bw5/logo.png
+mcd12,McDonald's Collection 2012,Other,12,12,"unlimited, expanded",,2012/06/15,2022/10/10 15:12:00,https://images.pokemontcg.io/mcd12/symbol.png,https://images.pokemontcg.io/mcd12/logo.png
+bw6,Dragons Exalted,Black & White,124,128,"unlimited, expanded",DRX,2012/08/15,2018/03/04 10:35:00,https://images.pokemontcg.io/bw6/symbol.png,https://images.pokemontcg.io/bw6/logo.png
+dv1,Dragon Vault,Black & White,20,21,"unlimited, expanded",DRV,2012/10/05,2019/01/28 16:44:00,https://images.pokemontcg.io/dv1/symbol.png,https://images.pokemontcg.io/dv1/logo.png
+bw7,Boundaries Crossed,Black & White,149,153,"unlimited, expanded",BCR,2012/11/07,2018/03/04 10:35:00,https://images.pokemontcg.io/bw7/symbol.png,https://images.pokemontcg.io/bw7/logo.png
+bw8,Plasma Storm,Black & White,135,138,"unlimited, expanded",PLS,2013/02/06,2020/08/14 09:35:00,https://images.pokemontcg.io/bw8/symbol.png,https://images.pokemontcg.io/bw8/logo.png
+bw9,Plasma Freeze,Black & White,116,122,"unlimited, expanded",PLF,2013/05/08,2018/03/04 10:35:00,https://images.pokemontcg.io/bw9/symbol.png,https://images.pokemontcg.io/bw9/logo.png
+bw10,Plasma Blast,Black & White,101,105,"unlimited, expanded",PLB,2013/08/14,2018/03/04 10:35:00,https://images.pokemontcg.io/bw10/symbol.png,https://images.pokemontcg.io/bw10/logo.png
+xyp,XY Black Star Promos,XY,211,216,"unlimited, expanded",PR-XY,2013/10/12,2020/08/14 09:35:00,https://images.pokemontcg.io/xyp/symbol.png,https://images.pokemontcg.io/xyp/logo.png
+bw11,Legendary Treasures,Black & White,113,140,"unlimited, expanded",LTR,2013/11/06,2018/03/04 10:35:00,https://images.pokemontcg.io/bw11/symbol.png,https://images.pokemontcg.io/bw11/logo.png
+xy0,Kalos Starter Set,XY,39,39,"unlimited, expanded",KSS,2013/11/08,2018/03/04 10:35:00,https://images.pokemontcg.io/xy0/symbol.png,https://images.pokemontcg.io/xy0/logo.png
+xy1,XY,XY,146,146,"unlimited, expanded",XY,2014/02/05,2018/03/04 10:35:00,https://images.pokemontcg.io/xy1/symbol.png,https://images.pokemontcg.io/xy1/logo.png
+xy2,Flashfire,XY,106,110,"unlimited, expanded",FLF,2014/05/07,2018/03/04 10:35:00,https://images.pokemontcg.io/xy2/symbol.png,https://images.pokemontcg.io/xy2/logo.png
+xy3,Furious Fists,XY,111,114,"unlimited, expanded",FFI,2014/08/13,2018/03/04 10:35:00,https://images.pokemontcg.io/xy3/symbol.png,https://images.pokemontcg.io/xy3/logo.png
+xy4,Phantom Forces,XY,119,124,"unlimited, expanded",PHF,2014/11/05,2020/08/14 09:35:00,https://images.pokemontcg.io/xy4/symbol.png,https://images.pokemontcg.io/xy4/logo.png
+xy5,Primal Clash,XY,160,164,"unlimited, expanded",PRC,2015/02/04,2020/05/01 16:06:00,https://images.pokemontcg.io/xy5/symbol.png,https://images.pokemontcg.io/xy5/logo.png
+dc1,Double Crisis,XY,34,34,"unlimited, expanded",DCR,2015/03/25,2019/01/28 16:44:00,https://images.pokemontcg.io/dc1/symbol.png,https://images.pokemontcg.io/dc1/logo.png
+xy6,Roaring Skies,XY,108,112,"unlimited, expanded",ROS,2015/05/06,2020/08/14 09:35:00,https://images.pokemontcg.io/xy6/symbol.png,https://images.pokemontcg.io/xy6/logo.png
+xy7,Ancient Origins,XY,98,100,"unlimited, expanded",AOR,2015/08/12,2020/08/14 09:35:00,https://images.pokemontcg.io/xy7/symbol.png,https://images.pokemontcg.io/xy7/logo.png
+xy8,BREAKthrough,XY,162,165,"unlimited, expanded",BKT,2015/11/04,2019/04/10 19:59:00,https://images.pokemontcg.io/xy8/symbol.png,https://images.pokemontcg.io/xy8/logo.png
+xy9,BREAKpoint,XY,122,126,"unlimited, expanded",BKP,2016/02/03,2020/08/14 09:35:00,https://images.pokemontcg.io/xy9/symbol.png,https://images.pokemontcg.io/xy9/logo.png
+g1,Generations,XY,83,117,"unlimited, expanded",GEN,2016/02/22,2020/08/14 09:35:00,https://images.pokemontcg.io/g1/symbol.png,https://images.pokemontcg.io/g1/logo.png
+xy10,Fates Collide,XY,124,129,"unlimited, expanded",FCO,2016/05/02,2018/09/03 11:49:00,https://images.pokemontcg.io/xy10/symbol.png,https://images.pokemontcg.io/xy10/logo.png
+xy11,Steam Siege,XY,114,116,"unlimited, expanded",STS,2016/08/03,2019/04/10 19:59:00,https://images.pokemontcg.io/xy11/symbol.png,https://images.pokemontcg.io/xy11/logo.png
+mcd16,McDonald's Collection 2016,Other,12,12,"unlimited, expanded",,2016/08/19,2022/10/10 15:12:00,https://images.pokemontcg.io/mcd16/symbol.png,https://images.pokemontcg.io/mcd16/logo.png
+xy12,Evolutions,XY,108,113,"unlimited, expanded",EVO,2016/11/02,2020/09/25 10:09:00,https://images.pokemontcg.io/xy12/symbol.png,https://images.pokemontcg.io/xy12/logo.png
+sm1,Sun & Moon,Sun & Moon,149,173,"unlimited, expanded",SUM,2017/02/03,2019/04/10 19:59:00,https://images.pokemontcg.io/sm1/symbol.png,https://images.pokemontcg.io/sm1/logo.png
+smp,SM Black Star Promos,Sun & Moon,248,250,"unlimited, expanded",PR-SM,2017/02/03,2020/05/01 16:06:00,https://images.pokemontcg.io/smp/symbol.png,https://images.pokemontcg.io/smp/logo.png
+sm2,Guardians Rising,Sun & Moon,145,180,"unlimited, expanded",GRI,2017/05/05,2022/10/11 21:39:00,https://images.pokemontcg.io/sm2/symbol.png,https://images.pokemontcg.io/sm2/logo.png
+sm3,Burning Shadows,Sun & Moon,147,177,"unlimited, expanded",BUS,2017/08/05,2022/10/11 21:39:00,https://images.pokemontcg.io/sm3/symbol.png,https://images.pokemontcg.io/sm3/logo.png
+sm35,Shining Legends,Sun & Moon,73,81,"unlimited, expanded",SLG,2017/10/06,2022/10/11 21:39:00,https://images.pokemontcg.io/sm35/symbol.png,https://images.pokemontcg.io/sm35/logo.png
+sm4,Crimson Invasion,Sun & Moon,111,126,"unlimited, expanded",CIN,2017/11/03,2022/10/11 21:39:00,https://images.pokemontcg.io/sm4/symbol.png,https://images.pokemontcg.io/sm4/logo.png
+sm5,Ultra Prism,Sun & Moon,156,178,"unlimited, expanded",UPR,2018/02/02,2019/02/19 23:25:00,https://images.pokemontcg.io/sm5/symbol.png,https://images.pokemontcg.io/sm5/logo.png
+sm6,Forbidden Light,Sun & Moon,131,150,"unlimited, expanded",FLI,2018/05/04,2019/02/19 23:25:00,https://images.pokemontcg.io/sm6/symbol.png,https://images.pokemontcg.io/sm6/logo.png
+sm7,Celestial Storm,Sun & Moon,168,187,"unlimited, expanded",CES,2018/08/03,2022/10/11 21:39:00,https://images.pokemontcg.io/sm7/symbol.png,https://images.pokemontcg.io/sm7/logo.png
+sm75,Dragon Majesty,Sun & Moon,70,80,"unlimited, expanded",DRM,2018/09/07,2018/10/01 21:54:00,https://images.pokemontcg.io/sm75/symbol.png,https://images.pokemontcg.io/sm75/logo.png
+sm8,Lost Thunder,Sun & Moon,214,240,"unlimited, expanded",LOT,2018/11/02,2020/08/14 09:35:00,https://images.pokemontcg.io/sm8/symbol.png,https://images.pokemontcg.io/sm8/logo.png
+sm9,Team Up,Sun & Moon,181,198,"unlimited, expanded",TEU,2019/02/01,2021/09/01 05:37:00,https://images.pokemontcg.io/sm9/symbol.png,https://images.pokemontcg.io/sm9/logo.png
+det1,Detective Pikachu,Sun & Moon,18,18,"unlimited, expanded",DET,2019/04/05,2021/09/01 05:37:00,https://images.pokemontcg.io/det1/symbol.png,https://images.pokemontcg.io/det1/logo.png
+sm10,Unbroken Bonds,Sun & Moon,214,234,"unlimited, expanded",UNB,2019/05/03,2021/09/01 05:37:00,https://images.pokemontcg.io/sm10/symbol.png,https://images.pokemontcg.io/sm10/logo.png
+sm11,Unified Minds,Sun & Moon,236,260,"unlimited, expanded",UNM,2019/08/02,2021/09/01 05:37:00,https://images.pokemontcg.io/sm11/symbol.png,https://images.pokemontcg.io/sm11/logo.png
+sm115,Hidden Fates,Sun & Moon,68,69,"unlimited, expanded",HIF,2019/08/23,2021/09/01 05:37:00,https://images.pokemontcg.io/sm115/symbol.png,https://images.pokemontcg.io/sm115/logo.png
+sma,Hidden Fates Shiny Vault,Sun & Moon,94,94,"unlimited, expanded",,2019/08/23,2021/09/01 05:37:00,https://images.pokemontcg.io/sma/symbol.png,https://images.pokemontcg.io/sma/logo.png
+mcd19,McDonald's Collection 2019,Other,12,12,"unlimited, expanded",,2019/10/15,2022/10/10 15:12:00,https://images.pokemontcg.io/mcd19/symbol.png,https://images.pokemontcg.io/mcd19/logo.png
+sm12,Cosmic Eclipse,Sun & Moon,236,272,"unlimited, expanded",CEC,2019/11/01,2021/09/01 05:37:00,https://images.pokemontcg.io/sm12/symbol.png,https://images.pokemontcg.io/sm12/logo.png
+swshp,SWSH Black Star Promos,Sword & Shield,307,304,"unlimited, standard, expanded",PR-SW,2019/11/15,2022/07/23 20:15:00,https://images.pokemontcg.io/swshp/symbol.png,https://images.pokemontcg.io/swshp/logo.png
+swsh1,Sword & Shield,Sword & Shield,202,216,"unlimited, expanded",SSH,2020/02/07,2020/08/14 09:35:00,https://images.pokemontcg.io/swsh1/symbol.png,https://images.pokemontcg.io/swsh1/logo.png
+swsh2,Rebel Clash,Sword & Shield,192,209,"unlimited, expanded",RCL,2020/05/01,2020/09/25 10:09:00,https://images.pokemontcg.io/swsh2/symbol.png,https://images.pokemontcg.io/swsh2/logo.png
+swsh3,Darkness Ablaze,Sword & Shield,189,201,"unlimited, expanded",DAA,2020/08/14,2020/10/25 13:45:00,https://images.pokemontcg.io/swsh3/symbol.png,https://images.pokemontcg.io/swsh3/logo.png
+swsh35,Champion's Path,Sword & Shield,73,80,"unlimited, expanded",CPA,2020/09/25,2020/10/25 13:45:00,https://images.pokemontcg.io/swsh35/symbol.png,https://images.pokemontcg.io/swsh35/logo.png
+swsh4,Vivid Voltage,Sword & Shield,185,203,"unlimited, expanded",VIV,2020/11/13,2020/11/13 16:20:00,https://images.pokemontcg.io/swsh4/symbol.png,https://images.pokemontcg.io/swsh4/logo.png
+swsh45,Shining Fates,Sword & Shield,72,73,"unlimited, standard, expanded",SHF,2021/02/19,2021/02/24 16:17:00,https://images.pokemontcg.io/swsh45/symbol.png,https://images.pokemontcg.io/swsh45/logo.png
+swsh45sv,Shining Fates Shiny Vault,Sword & Shield,122,122,"unlimited, expanded",SHF,2021/02/19,2021/02/24 16:17:00,https://images.pokemontcg.io/swsh45sv/symbol.png,https://images.pokemontcg.io/swsh45sv/logo.png
+swsh5,Battle Styles,Sword & Shield,163,183,"unlimited, standard, expanded",BST,2021/03/19,2021/03/19 15:12:00,https://images.pokemontcg.io/swsh5/symbol.png,https://images.pokemontcg.io/swsh5/logo.png
+swsh6,Chilling Reign,Sword & Shield,198,233,"unlimited, standard, expanded",CRE,2021/06/18,2021/06/18 12:12:00,https://images.pokemontcg.io/swsh6/symbol.png,https://images.pokemontcg.io/swsh6/logo.png
+swsh7,Evolving Skies,Sword & Shield,203,237,"unlimited, standard, expanded",EVS,2021/08/27,2021/08/27 10:17:00,https://images.pokemontcg.io/swsh7/symbol.png,https://images.pokemontcg.io/swsh7/logo.png
+cel25,Celebrations,Sword & Shield,25,25,"unlimited, standard, expanded",CEL,2021/10/08,2022/10/11 21:39:00,https://images.pokemontcg.io/cel25/symbol.png,https://images.pokemontcg.io/cel25/logo.png
+cel25c,Celebrations: Classic Collection,Sword & Shield,25,25,unlimited,CEL,2021/10/08,2022/10/11 21:39:00,https://images.pokemontcg.io/cel25c/symbol.png,https://images.pokemontcg.io/cel25c/logo.png
+mcd14,McDonald's Collection 2014,Other,12,12,"unlimited, expanded",,2014/05/23,2022/10/10 15:12:00,https://images.pokemontcg.io/mcd14/symbol.png,https://images.pokemontcg.io/mcd14/logo.png
+mcd15,McDonald's Collection 2015,Other,12,12,"unlimited, expanded",,2015/11/27,2022/10/10 15:12:00,https://images.pokemontcg.io/mcd15/symbol.png,https://images.pokemontcg.io/mcd15/logo.png
+mcd18,McDonald's Collection 2018,Other,12,12,"unlimited, expanded",,2018/10/16,2022/10/10 15:12:00,https://images.pokemontcg.io/mcd18/symbol.png,https://images.pokemontcg.io/mcd18/logo.png
+mcd17,McDonald's Collection 2017,Other,12,12,"unlimited, expanded",,2017/11/07,2022/10/10 15:12:00,https://images.pokemontcg.io/mcd17/symbol.png,https://images.pokemontcg.io/mcd17/logo.png
+mcd21,McDonald's Collection 2021,Other,25,25,"unlimited, expanded",,2021/02/09,2022/10/10 15:12:00,https://images.pokemontcg.io/mcd21/symbol.png,https://images.pokemontcg.io/mcd21/logo.png
+bp,Best of Game,Other,9,9,unlimited,BP,2002/12/01,2021/10/16 09:52:00,https://images.pokemontcg.io/bp/symbol.png,https://images.pokemontcg.io/bp/logo.png
+swsh8,Fusion Strike,Sword & Shield,264,284,"unlimited, standard, expanded",FST,2021/11/12,2021/11/12 07:32:00,https://images.pokemontcg.io/swsh8/symbol.png,https://images.pokemontcg.io/swsh8/logo.png
+fut20,Pokémon Futsal Collection,Other,5,5,"unlimited, standard, expanded",FUT20,2020/09/11,2022/10/10 15:12:00,https://images.pokemontcg.io/fut20/symbol.png,https://images.pokemontcg.io/fut20/logo.png
+tk1a,EX Trainer Kit Latias,EX,10,10,unlimited,,2004/06/01,2022/01/13 20:44:00,https://images.pokemontcg.io/tk1a/symbol.png,https://images.pokemontcg.io/tk1a/logo.png
+tk1b,EX Trainer Kit Latios,EX,10,10,unlimited,,2004/06/01,2022/01/13 20:44:00,https://images.pokemontcg.io/tk1b/symbol.png,https://images.pokemontcg.io/tk1b/logo.png
+tk2a,EX Trainer Kit 2 Plusle,EX,12,12,unlimited,,2006/03/01,2022/01/13 20:44:00,https://images.pokemontcg.io/tk2a/symbol.png,https://images.pokemontcg.io/tk2a/logo.png
+tk2b,EX Trainer Kit 2 Minun,EX,12,12,unlimited,,2006/03/01,2022/01/13 20:44:00,https://images.pokemontcg.io/tk2b/symbol.png,https://images.pokemontcg.io/tk2b/logo.png
+swsh9,Brilliant Stars,Sword & Shield,172,186,"unlimited, standard, expanded",BRS,2022/02/25,2022/02/23 09:45:00,https://images.pokemontcg.io/swsh9/symbol.png,https://images.pokemontcg.io/swsh9/logo.png
+swsh9tg,Brilliant Stars Trainer Gallery,Sword & Shield,30,30,"unlimited, standard, expanded",BRS,2022/02/25,2022/02/23 09:45:00,https://images.pokemontcg.io/swsh9tg/symbol.png,https://images.pokemontcg.io/swsh9tg/logo.png
+swsh10,Astral Radiance,Sword & Shield,189,216,"unlimited, standard, expanded",ASR,2022/05/27,2022/05/27 09:45:00,https://images.pokemontcg.io/swsh10/symbol.png,https://images.pokemontcg.io/swsh10/logo.png
+swsh10tg,Astral Radiance Trainer Gallery,Sword & Shield,30,30,"unlimited, standard, expanded",ASR,2022/05/27,2022/05/27 09:45:00,https://images.pokemontcg.io/swsh10tg/symbol.png,https://images.pokemontcg.io/swsh10tg/logo.png
+pgo,Pokémon GO,Sword & Shield,78,88,"unlimited, standard, expanded",PGO,2022/07/01,2022/07/06 17:07:00,https://images.pokemontcg.io/pgo/symbol.png,https://images.pokemontcg.io/pgo/logo.png
+swsh11,Lost Origin,Sword & Shield,196,217,"unlimited, standard, expanded",LOR,2022/09/09,2022/09/09 13:45:00,https://images.pokemontcg.io/swsh11/symbol.png,https://images.pokemontcg.io/swsh11/logo.png
+swsh11tg,Lost Origin Trainer Gallery,Sword & Shield,30,30,"unlimited, standard, expanded",LOR,2022/09/09,2022/09/09 13:45:00,https://images.pokemontcg.io/swsh11tg/symbol.png,https://images.pokemontcg.io/swsh11tg/logo.png
+swsh12,Silver Tempest,Sword & Shield,195,215,"unlimited, standard, expanded",SIT,2022/11/11,2022/09/09 11:45:00,https://images.pokemontcg.io/swsh12/symbol.png,https://images.pokemontcg.io/swsh12/logo.png
+swsh12tg,Silver Tempest Trainer Gallery,Sword & Shield,30,30,"unlimited, standard, expanded",SIT,2022/11/11,2022/11/11 11:45:00,https://images.pokemontcg.io/swsh12tg/symbol.png,https://images.pokemontcg.io/swsh12tg/logo.png
+mcd22,McDonald's Collection 2022,Other,15,15,"unlimited, expanded, standard",,2022/08/03,2022/10/09 13:21:00,https://images.pokemontcg.io/mcd22/symbol.png,https://images.pokemontcg.io/mcd22/logo.png
+swsh12pt5,Crown Zenith,Sword & Shield,159,160,"unlimited, standard, expanded",CRZ,2023/01/20,2023/01/19 15:45:00,https://images.pokemontcg.io/swsh12pt5/symbol.png,https://images.pokemontcg.io/swsh12pt5/logo.png
+swsh12pt5gg,Crown Zenith Galarian Gallery,Sword & Shield,70,70,"unlimited, standard, expanded",CRZ,2023/01/20,2023/01/19 15:45:00,https://images.pokemontcg.io/swsh12pt5gg/symbol.png,https://images.pokemontcg.io/swsh12pt5gg/logo.png
+sv1,Scarlet & Violet,Scarlet & Violet,198,258,"unlimited, standard, expanded",SVI,2023/03/31,2023/03/31 15:45:00,https://images.pokemontcg.io/sv1/symbol.png,https://images.pokemontcg.io/sv1/logo.png
+svp,Scarlet & Violet Black Star Promos,Scarlet & Violet,102,75,"unlimited, standard, expanded",PR-SV,2023/01/01,2023/12/11 23:15:00,https://images.pokemontcg.io/svp/symbol.png,https://images.pokemontcg.io/svp/logo.png
+sv2,Paldea Evolved,Scarlet & Violet,193,279,"unlimited, standard, expanded",PAL,2023/06/09,2023/06/09 15:00:00,https://images.pokemontcg.io/sv2/symbol.png,https://images.pokemontcg.io/sv2/logo.png
+sve,Scarlet & Violet Energies,Scarlet & Violet,8,8,"unlimited, standard, expanded",SVE,2023/03/31,2023/07/20 15:45:00,https://images.pokemontcg.io/sve/symbol.png,https://images.pokemontcg.io/sve/logo.png
+sv3,Obsidian Flames,Scarlet & Violet,197,230,"unlimited, standard, expanded",OBF,2023/08/11,2023/08/11 15:00:00,https://images.pokemontcg.io/sv3/symbol.png,https://images.pokemontcg.io/sv3/logo.png
+sv3pt5,151,Scarlet & Violet,165,207,"unlimited, standard, expanded",MEW,2023/09/22,2023/09/22 15:00:00,https://images.pokemontcg.io/sv3pt5/symbol.png,https://images.pokemontcg.io/sv3pt5/logo.png
+sv4,Paradox Rift,Scarlet & Violet,182,266,"unlimited, standard, expanded",PAR,2023/11/03,2023/11/03 15:00:00,https://images.pokemontcg.io/sv4/symbol.png,https://images.pokemontcg.io/sv4/logo.png
+sv4pt5,Paldean Fates,Scarlet & Violet,91,245,"unlimited, standard, expanded",PAF,2024/01/26,2024/01/25 15:00:00,https://images.pokemontcg.io/sv4pt5/symbol.png,https://images.pokemontcg.io/sv4pt5/logo.png
+sv5,Temporal Forces,Scarlet & Violet,162,218,"unlimited, standard, expanded",TEF,2024/03/22,2024/03/22 15:00:00,https://images.pokemontcg.io/sv5/symbol.png,https://images.pokemontcg.io/sv5/logo.png
+sv6,Twilight Masquerade,Scarlet & Violet,167,226,"unlimited, standard, expanded",TWM,2024/05/24,2024/05/23 15:00:00,https://images.pokemontcg.io/sv6/symbol.png,https://images.pokemontcg.io/sv6/logo.png

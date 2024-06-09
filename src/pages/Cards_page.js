@@ -31,7 +31,7 @@ const Carte = () => {
       try {
         const response = await axios.get('http://127.0.0.1:5000/sets');
         console.log('Sets response:', response);  // Debug log
-        setSets(response.data.data);
+        setSets(response.data.data || []);
       } catch (err) {
         console.error('Error fetching sets:', err.message);
         setError('Error fetching sets');
@@ -82,24 +82,12 @@ const Carte = () => {
         });
         console.log('Cards response:', response);  // Debug log
 
-        const cards = response.data.data;
-        const cardDetailsPromises = cards.map(async (card) => {
-          const apiResponse = await axios.get(`https://api.pokemontcg.io/v2/cards/${card.id}`, {
-            headers: {
-              'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
-            }
-          });
-          return {
-            ...card,
-            images: apiResponse.data.data.images,
-            prices: apiResponse.data.data.cardmarket ? apiResponse.data.data.cardmarket.prices : {}
-          };
-        });
+        // Ensure the response is parsed correctly
+        const data = response.data; // No need to check if it's a string
+        const cards = data.data || [];
+        setCards(cards);
 
-        const detailedCards = await Promise.all(cardDetailsPromises);
-        setCards(detailedCards);
-
-        if (detailedCards.length === 0 && page > 1) {
+        if (cards.length === 0 && page > 1) {
           setPage(page - 1);
         }
       } catch (err) {
@@ -200,15 +188,15 @@ const Carte = () => {
             <p>Loading...</p>
           ) : cards.length > 0 ? (
             cards.map(card => (
-              <Link to={`/card-details/${card.id}`} key={card.id}>
+              <Link to={`/card-details/${card._id}`} key={card._id}>
                 <div className="card">
                   <LazyLoadImage
-                    src={card.images.large}
+                    src={card.image_url}
                     alt={card.name}
                     effect="blur"
                     placeholderSrc={PlaceHolder}
                   />
-                  <ImagePreloader src={card.images.large} />
+                  <ImagePreloader src={card.image_url} />
                 </div>
               </Link>
             ))
