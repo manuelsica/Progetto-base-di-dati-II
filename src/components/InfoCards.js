@@ -1,7 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import MagicButton from './MagicButton';
 
 const InfoCards = () => {
+  const [image, setImage] = useState('');
+
+  useEffect(() => {
+    const fetchCardImages = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:5000/paradox-rift-pokemon-images');
+        const images = response.data.data;
+        if (images.length > 0) {
+          const randomImage = images[Math.floor(Math.random() * images.length)];
+          setImage(randomImage);
+        }
+      } catch (error) {
+        console.error('Error fetching card images:', error);
+      }
+    };
+
+    fetchCardImages();
+  }, []);
+
   return (
     <div className="info_cards animeX" id="info_cards">
       <div className="contentBx">
@@ -13,10 +33,10 @@ const InfoCards = () => {
       </div>
       <div className="imgBox">
         <main id="app">
-          <div className="card"></div>
-          <div className="card"></div>
-          <div className="card"></div>
-          <div className="card"></div>
+          {image && <div className="card" style={{ backgroundImage: `url(${image})` }}></div>}
+          {image && <div className="card" style={{ backgroundImage: `url(${image})` }}></div>}
+          {image && <div className="card" style={{ backgroundImage: `url(${image})` }}></div>}
+          {image && <div className="card" style={{ backgroundImage: `url(${image})` }}></div>}
           <style className="hover"></style>
         </main>
       </div>

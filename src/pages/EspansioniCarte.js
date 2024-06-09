@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Header from '../components/Header';
 import Background from '../components/Background';
@@ -10,8 +10,6 @@ import Footer from '../components/Footer';
 import PlaceHolder from '../assets/images/background.webp';
 import ImagePreloader from './ImagePreloader';
 import MagicButton from '../components/MagicButton';
-import { Link } from 'react-router-dom';
-
 
 axios.defaults.withCredentials = false;
 const Espansioni_Carte = () => {
@@ -31,12 +29,8 @@ const Espansioni_Carte = () => {
     useEffect(() => {
         const fetchSetName = async () => {
             try {
-                const response = await axios.get(`https://api.pokemontcg.io/v2/sets/${setId}`, {
-                    headers: {
-                        'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
-                    }
-                });
-                setSetName(response.data.data.name); // Fix data access
+                const response = await axios.get(`http://127.0.0.1:5000/db_sets/${setId}`);
+                setSetName(response.data.data.name);
             } catch (err) {
                 console.error('Error fetching set name:', err.message);
             }
@@ -48,13 +42,12 @@ const Espansioni_Carte = () => {
     useEffect(() => {
         const fetchTotalPages = async () => {
             try {
-                const response = await axios.get('https://api.pokemontcg.io/v2/cards', {
+                const response = await axios.get(`http://127.0.0.1:5000/db_sets/${setId}/cards`, {
                     params: {
                         pageSize: 30,
-                        q: `set.id:${setId}` + (search ? ` name:${search}*` : '') // Filter by set ID and search query
-                    },
-                    headers: {
-                        'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
+                        search: search,
+                        type: selectedType,
+                        supertype: selectedSupertype
                     }
                 });
                 const totalCards = response.data.totalCount;
@@ -65,32 +58,27 @@ const Espansioni_Carte = () => {
         };
 
         fetchTotalPages();
-    }, [setId, search]);
+    }, [setId, search, selectedType, selectedSupertype]);
 
     useEffect(() => {
         const fetchCards = async () => {
             setLoading(true);
             setError(null);
             try {
-                const response = await axios.get('https://api.pokemontcg.io/v2/cards', {
+                const response = await axios.get(`http://127.0.0.1:5000/db_sets/${setId}/cards`, {
                     params: {
                         pageSize: 30,
                         page: page,
-                        q: `set.id:${setId}` + (search ? ` name:${search}*` : '') +
-                            (selectedType ? ` types:${selectedType}` : '') +
-                            (selectedSupertype ? ` supertype:${selectedSupertype}` : '') // Filter by set ID and search query
-                    },
-                    headers: {
-                        'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
+                        search: search,
+                        type: selectedType,
+                        supertype: selectedSupertype
                     }
                 });
 
-                const filteredCards = response.data.data.filter(card => new Date(card.set.releaseDate) <= new Date('2023-11-03'));
-
-                setCards(filteredCards);
+                setCards(response.data.data);
 
                 // Adjust total pages if there are no cards on the current page
-                if (filteredCards.length === 0 && page > 1) {
+                if (response.data.data.length === 0 && page > 1) {
                     setPage(page - 1);
                 }
             } catch (err) {
@@ -178,7 +166,7 @@ const Espansioni_Carte = () => {
                         <p>Loading...</p>
                     ) : cards.length > 0 ? (
                         cards.map(card => (
-                            <Link to={`/card-details/${card.id}`} key={card.id}>
+                            <Link to={`/card-details/${card._id}`} key={card._id}>
                                 <div className="card">
                                     <LazyLoadImage
                                         src={card.images.large}
@@ -208,7 +196,7 @@ const Espansioni_Carte = () => {
                         />
                     </div>
                 )}
-            </div >
+            </div>
             <Footer />
         </>
     );

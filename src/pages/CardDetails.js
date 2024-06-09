@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../components/Header';
 import { Helmet } from 'react-helmet';
@@ -19,6 +19,7 @@ import psychic from '../assets/images/psychic.png';
 import MagicButton from '../components/MagicButton';
 
 axios.defaults.withCredentials = false;
+
 const CardDetails = () => {
   const { id } = useParams();
   const [card, setCard] = useState(null);
@@ -75,10 +76,14 @@ const CardDetails = () => {
     try {
       if (selectedDeck) {
         const token = localStorage.getItem('token');
-        const response = await axios.post(`http://127.0.0.1:5000/decks/${selectedDeck}/cards`, { cardId: card.id }, {
+        await axios.post(`http://127.0.0.1:5000/decks/${selectedDeck}/cards`, { cardId: card._id }, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        setSuccessMessage(`Carta ${card.name} aggiunta al mazzo ${decks.find(deck => deck.id === parseInt(selectedDeck)).name}`);
+
+        const deck = decks.find(deck => deck.id === parseInt(selectedDeck));
+        const deckName = deck ? deck.name : "selected deck";
+
+        setSuccessMessage(`Carta ${card.name} aggiunta al mazzo ${deckName}`);
         setErrorMessage('');
       } else {
         setErrorMessage('Seleziona un mazzo per aggiungere la carta.');
@@ -92,12 +97,17 @@ const CardDetails = () => {
   };
 
   const getPrice = () => {
-    if (typeof card.price === 'number') {
-      return card.price;
+    if (card.tcgplayer && card.tcgplayer.prices) {
+      const priceFields = ['normal', 'holofoil', 'reverseHolofoil', 'unlimited', '1stEditionHolofoil', 'unlimitedHolofoil'];
+      for (let field of priceFields) {
+        const price = card.tcgplayer.prices[field]?.market || card.tcgplayer.prices[field]?.mid;
+        if (price !== null && price !== undefined) {
+          return price;
+        }
+      }
     }
-    const priceFields = ['normal', 'holofoil', 'reverseHolofoil', 'unlimited', '1stEditionHolofoil', 'unlimitedHolofoil'];
-    for (let field of priceFields) {
-      const price = card.price?.[field];
+    if (card.cardmarket && card.cardmarket.prices) {
+      const price = card.cardmarket.prices.trendPrice || card.cardmarket.prices.averageSellPrice;
       if (price !== null && price !== undefined) {
         return price;
       }
@@ -139,7 +149,7 @@ const CardDetails = () => {
               <div className="column is-one-third">
                 <img
                   className="card-image"
-                  src={card.image_url || ''}
+                  src={card.images.large || ''}
                   alt={card.name}
                 />
               </div>
@@ -151,7 +161,7 @@ const CardDetails = () => {
                         <span className="title is-3">{card.name || ''}
                           {card.subtypes && (
                             <div className="title is-5 has-text-muted">
-                              Pokémon - {card.subtypes}
+                              Pokémon - {card.subtypes.join(', ')}
                             </div>
                           )}
                         </span>
@@ -164,7 +174,7 @@ const CardDetails = () => {
                           {card.types && (
                             <img
                               className="energy"
-                              src={getImageSrc(card.types)}
+                              src={getImageSrc(card.types[0])}
                               alt="Energy"
                             />
                           )}
@@ -184,27 +194,45 @@ const CardDetails = () => {
                   {card.abilities && (
                     <section>
                       <p className="heading">Abilities</p>
-                      {Array.isArray(card.abilities) ? card.abilities.map((ability, index) => (
+                      {card.abilities.map((ability, index) => (
                         <div className="card-details_ability" key={index}>
                           <p className="title is-5">{ability.type}: {ability.name}</p>
                           <p>{ability.text}</p>
                         </div>
-                      )) : <p>No abilities available.</p>}
+                      ))}
                     </section>
                   )}
                   {card.attacks && (
                     <section>
                       <p className="heading">Attacks</p>
                       <table>
-                        {typeof card.attacks === 'string' ? (
-                          <tbody className="card-details_attack">
+                        {card.attacks.map((attack, index) => (
+                          <tbody className="card-details_attack" key={index}>
                             <tr>
+                              <td className="nowrap">
+                                {attack.cost.map((type, idx) => (
+                                  <img
+                                    key={idx}
+                                    className="energy"
+                                    src={getImageSrc(type)}
+                                    alt="Energy"
+                                  />
+                                ))}
+                              </td>
                               <td className="attack-name">
-                                <span className="title is-4">{card.attacks}</span>
+                                <span className="title is-4">{attack.name}</span>
+                              </td>
+                              <td>
+                                <span className="title is-4 is-muted nowrap">{attack.damage}</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colSpan="3">
+                                <p className='info'>{attack.text}</p>
                               </td>
                             </tr>
                           </tbody>
-                        ) : <p>No attacks available.</p>}
+                        ))}
                       </table>
                     </section>
                   )}
@@ -212,11 +240,9 @@ const CardDetails = () => {
                     <section>
                       <div className="card-details_ability">
                         <p className="heading">Rules</p>
-                        {typeof card.rules === 'string' ? (
-                          card.rules.split(', ').map((rule, idx) => (
-                            <p className="is-flex is-flex-direction-column" key={idx}>{rule}</p>
-                          ))
-                        ) : <p>No rules available.</p>}
+                        {card.rules.map((rule, idx) => (
+                          <p className="is-flex is-flex-direction-column" key={idx}>{rule}</p>
+                        ))}
                       </div>
                     </section>
                   )}
@@ -226,16 +252,16 @@ const CardDetails = () => {
                         <div className="column is-one-third-desktop is-one-third-tablet is-half-mobile">
                           <div className="card-details_weakness">
                             <p className="heading">Weakness</p>
-                            {typeof card.weaknesses === 'string' ? (
-                              <p className="title is-5 is-flex is-align-items-center">
+                            {card.weaknesses.map((weakness, idx) => (
+                              <p className="title is-5 is-flex is-align-items-center" key={idx}>
                                 <img
                                   className="energy"
-                                  src={getImageSrc(card.weaknesses)}
+                                  src={getImageSrc(weakness.type)}
                                   alt="Weakness"
                                 />
-                                <span className="ml-1">{card.weaknesses}</span>
+                                <span className="ml-1">{weakness.value}</span>
                               </p>
-                            ) : <p>No weaknesses available.</p>}
+                            ))}
                           </div>
                         </div>
                       )}
@@ -243,16 +269,16 @@ const CardDetails = () => {
                         <div className="column is-one-third-desktop is-one-third-tablet is-half-mobile">
                           <div className="card-details_resistance">
                             <p className="heading">Resistance</p>
-                            {typeof card.resistances === 'string' ? (
-                              <p className="title is-5 is-flex is-align-items-center">
+                            {card.resistances.map((resistance, idx) => (
+                              <p className="title is-5 is-flex is-align-items-center" key={idx}>
                                 <img
                                   className="energy"
-                                  src={getImageSrc(card.resistances)}
+                                  src={getImageSrc(resistance.type)}
                                   alt="Resistance"
                                 />
-                                <span className="ml-1">{card.resistances}</span>
+                                <span className="ml-1">{resistance.value}</span>
                               </p>
-                            ) : <p>No resistances available.</p>}
+                            ))}
                           </div>
                         </div>
                       )}
@@ -260,14 +286,14 @@ const CardDetails = () => {
                         <div className="column is-one-third-desktop is-one-third-tablet is-half-mobile">
                           <div className="card-details_retreat">
                             <p className="heading">Retreat Cost</p>
-                            {typeof card.retreatCost === 'string' ? card.retreatCost.split(', ').map((type, idx) => (
+                            {card.retreatCost.map((type, idx) => (
                               <img
                                 key={idx}
                                 className="energy"
                                 src={getImageSrc(type)}
                                 alt="Retreat Cost"
                               />
-                            )) : <p>No retreat cost available.</p>}
+                            ))}
                           </div>
                         </div>
                       )}
@@ -287,26 +313,26 @@ const CardDetails = () => {
                           </div>
                         </div>
                       )}
-                      {card.set_name && (
+                      {card.set && (
                         <div className="column is-one-third-desktop is-one-third-tablet is-half-mobile">
                           <div className="card-details_set">
                             <p className="heading">Set</p>
                             <p className="title is-5">
-                              <a
+                              <Link
                                 className="is-flex is-align-items-center"
-                                href=""
+                                to={`/expansion-cards/${card.set.id}`}
                               >
-                                {card.set_name}
-                              </a>
+                                {card.set.name}
+                              </Link>
                             </p>
                           </div>
                         </div>
                       )}
-                      {card.nationalPokedexNumbers && (
+                      {card.number && card.set && (
                         <div className="column is-one-third-desktop is-one-third-tablet is-half-mobile">
                           <div className="card-details_number">
-                            <p className="heading">National Pokédex Number</p>
-                            <p className="title is-5">{card.nationalPokedexNumbers}</p>
+                            <p className="heading">Number</p>
+                            <p className="title is-5">{card.number} / {card.set.printedTotal}</p>
                           </div>
                         </div>
                       )}
@@ -320,7 +346,7 @@ const CardDetails = () => {
                           <select className='deck-select' value={selectedDeck} onChange={(e) => setSelectedDeck(e.target.value)}>
                             <option value="">Seleziona un mazzo</option>
                             {decks.map(deck => (
-                              <option key={deck._id} value={deck._id}>{deck.name}</option>
+                              <option key={deck.id} value={deck.id}>{deck.name}</option>
                             ))}
                           </select>
                         </div>

@@ -4,17 +4,22 @@ import Background from '../components/Background';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Espansioni_page = () => {
   const [sets, setSets] = useState([]);
 
   useEffect(() => {
-    fetch('https://api.pokemontcg.io/v2/sets')
-      .then(response => response.json())
-      .then(data => {
-        const filteredSets = data.data.filter(set => new Date(set.releaseDate) <= new Date('2023-11-03'));
-        setSets(filteredSets);
-      });
+    const fetchSets = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:5000/db_sets');
+        setSets(response.data.data);
+      } catch (error) {
+        console.error('Error fetching sets:', error);
+      }
+    };
+
+    fetchSets();
   }, []);
 
   const groupedSets = sets.reduce((acc, set) => {
@@ -37,15 +42,15 @@ const Espansioni_page = () => {
             <h2>{series}</h2>
             <div className="sets-grid">
               {groupedSets[series].map(set => (
-                <div className="set-card">
-                <Link to={`/expansion-cards/${set.id}`} key={set.id}>
+                <div className="set-card" key={set.id}>
+                  <Link to={`/expansion-cards/${set.id}`}>
                     <img src={set.images.logo} alt={set.name} />
                     <div className="set-info">
                       <h3>{set.name}</h3>
                       <p>Release Date: {set.releaseDate}</p>
                     </div>
-                    </Link>
-                  </div>
+                  </Link>
+                </div>
               ))}
             </div>
           </div>

@@ -31,10 +31,8 @@ const DeckDetails = () => {
                 const cardIds = response.data.cards;
 
                 const cardDetailsPromises = cardIds.map(cardId => 
-                    axios.get(`https://api.pokemontcg.io/v2/cards/${cardId}`, {
-                        headers: {
-                            'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
-                        }
+                    axios.get(`http://127.0.0.1:5000/cards/${cardId}`, {
+                        headers: { Authorization: `Bearer ${token}` }
                     })
                 );
                 const cardDetailsResponses = await Promise.all(cardDetailsPromises);
@@ -62,11 +60,7 @@ const DeckDetails = () => {
     useEffect(() => {
         const fetchSets = async () => {
             try {
-                const response = await axios.get('https://api.pokemontcg.io/v2/sets', {
-                    headers: {
-                        'X-Api-Key': 'dcd81c77-600b-4649-ae91-8a317c4cd62e'
-                    }
-                });
+                const response = await axios.get('http://127.0.0.1:5000/db_sets');
                 setSets(response.data.data);
             } catch (err) {
                 console.error('Error fetching sets:', err.message);
@@ -125,11 +119,11 @@ const DeckDetails = () => {
     const removeCardFromDeck = async () => {
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://127.0.0.1:5000/decks/${id}/cards/${selectedCard.id}`, {
+            await axios.delete(`http://127.0.0.1:5000/decks/${id}/cards/${selectedCard._id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            setCards(cards.filter(card => card.id !== selectedCard.id));
-            setOriginalCards(originalCards.filter(card => card.id !== selectedCard.id));
+            setCards(cards.filter(card => card._id !== selectedCard._id));
+            setOriginalCards(originalCards.filter(card => card._id !== selectedCard._id));
             const price = getPrice(selectedCard);
             if (price && price !== 'N/A') {
                 setTotalDeckValue(prevValue => prevValue - parseFloat(price));
@@ -217,8 +211,8 @@ const DeckDetails = () => {
                 <div className="cards-grid">
                     {cards.length > 0 ? (
                         cards.map(card => (
-                            <div key={card.id} className="card">
-                                <Link to={`/card-details/${card.id}`}>
+                            <div key={card._id} className="card">
+                                <Link to={`/card-details/${card._id}`}>
                                     <img src={card.images.large} alt={card.name} />
                                 </Link>
                                 <MagicButton buttonText="-" onClick={() => openRemoveModal(card)} />

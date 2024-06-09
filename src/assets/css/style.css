@@ -1093,7 +1093,6 @@ a {
     width: 320px;
     height: 446px;
     background-color: #211799;
-    background-image: url(https://images.pokemontcg.io/xy2/12_hires.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -1108,8 +1107,8 @@ a {
     vertical-align: middle;
     margin: 20px 10px;
     animation: haloCard 15s ease infinite;
-
 }
+
 
 .imgBox .card>span {
     position: relative;

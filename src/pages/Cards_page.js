@@ -182,12 +182,12 @@ const Carte = () => {
               <Link to={`/card-details/${card._id}`} key={card._id}>
                 <div className="card">
                   <LazyLoadImage
-                    src={card.image_url}
+                    src={card.images.large}
                     alt={card.name}
                     effect="blur"
                     placeholderSrc={PlaceHolder}
                   />
-                  <ImagePreloader src={card.image_url} />
+                  <ImagePreloader src={card.images.large} />
                 </div>
               </Link>
             ))

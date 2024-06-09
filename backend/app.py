@@ -167,9 +167,7 @@ def add_card_to_deck(deck_id):
             card_already_in_deck = card_id in deck.get("cards", [])
 
             if card_already_in_deck:
-                card_details_response = requests.get(f'https://api.pokemontcg.io/v2/cards/{card_id}',
-                                                     headers={'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'})
-                card_details = card_details_response.json().get('data', {})
+                card_details = cards_collection.find_one({"_id": ObjectId(card_id)})
                 card_supertype = card_details.get('supertype', '')
 
                 if card_supertype != 'Energy' and card_supertype != 'Trainer':
@@ -228,7 +226,7 @@ def get_cards():
         if search:
             query['name'] = {'$regex': search, '$options': 'i'}
         if selected_set:
-            query['set_name'] = selected_set
+            query['set.name'] = selected_set
         if selected_type:
             query['types'] = selected_type
         if selected_supertype:
@@ -247,7 +245,6 @@ def get_cards():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
 @app.route('/sets', methods=['GET'])
 def get_sets():
     try:
@@ -255,6 +252,25 @@ def get_sets():
         return jsonify({'data': sets})
     except Exception as e:
         print(f"Error: {str(e)}")  # Debug log
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/db_sets', methods=['GET'])
+def get_db_sets():
+    try:
+        sets = list(sets_collection.find({}))
+        sets = json_serializable(sets)
+        return jsonify({'data': sets})
+    except Exception as e:
+        print(f"Error: {str(e)}")  # Debug log
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/random-card-images', methods=['GET'])
+def get_random_card_images():
+    try:
+        cards = list(cards_collection.find({}, {'images.large': 1}))
+        images = [card['images']['large'] for card in cards if 'images' in card and 'large' in card['images']]
+        return jsonify({'data': images})
+    except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 @app.route('/cards/<string:card_id>', methods=['GET'])
@@ -269,6 +285,60 @@ def get_card_details(card_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/db_sets/<string:set_id>/cards', methods=['GET'])
+def get_cards_by_set(set_id):
+    try:
+        page = int(request.args.get('page', 1))
+        page_size = int(request.args.get('pageSize', 30))
+        search = request.args.get('search', '')
+        selected_type = request.args.get('type', '')
+        selected_supertype = request.args.get('supertype', '')
+
+        query = {'set.id': set_id}
+        if search:
+            query['name'] = {'$regex': search, '$options': 'i'}
+        if selected_type:
+            query['types'] = selected_type
+        if selected_supertype:
+            query['supertype'] = selected_supertype
+
+        total_cards = cards_collection.count_documents(query)
+        cards = list(cards_collection.find(query).skip((page - 1) * page_size).limit(page_size))
+        cards = json_serializable(cards)
+
+        return jsonify({
+            'data': cards,
+            'totalCount': total_cards,
+            'currentPage': page,
+            'totalPages': math.ceil(total_cards / page_size)
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/db_sets/<string:set_id>', methods=['GET'])
+def get_set_details(set_id):
+    try:
+        set_details = sets_collection.find_one({"id": set_id})
+        if set_details:
+            set_details = json_serializable(set_details)
+            return jsonify({'data': set_details})
+        else:
+            return jsonify({'error': 'Set not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/paradox-rift-pokemon-images', methods=['GET'])
+def get_paradox_rift_pokemon_images():
+    try:
+        query = {
+            'set.name': 'Paradox Rift',
+            'supertype': 'Pokémon'
+        }
+        cards = list(cards_collection.find(query, {'images.large': 1}))
+        images = [card['images']['large'] for card in cards if 'images' in card and 'large' in card['images']]
+        return jsonify({'data': images})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
