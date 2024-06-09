@@ -1,41 +1,53 @@
 import pandas as pd
 import requests
+import concurrent.futures
 
 # Carica il file CSV
-file_path = 'backend/carte.csv'  # Sostituisci con il percorso corretto del tuo file
+file_path = 'backend/carte.csv' 
 df = pd.read_csv(file_path)
 
-# Funzione per recuperare i dati dall'API di Pokemon TCG con paginazione
-def get_all_pokemon_card_data():
-    url = 'https://api.pokemontcg.io/v2/cards'
-    headers = {'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'}  # Sostituisci 'YOUR_API_KEY' con la tua chiave API
-    params = {'pageSize': 250}  # Dimensione della pagina per limitare il numero di richieste
-    all_cards_data = []
+# Funzione per recuperare i dati di una singola carta dall'API di Pokemon TCG
+def get_pokemon_card_data(card_id):
+    url = f'https://api.pokemontcg.io/v2/cards/{card_id}'
+    headers = {'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'} 
     
-    while url:
-        response = requests.get(url, headers=headers, params=params)
-        if response.status_code == 200:
-            data = response.json()
-            all_cards_data.extend(data['data'])
-            url = data.get('nextPage', None)  # Ottieni l'URL della pagina successiva
-        else:
-            raise Exception(f"Errore nell'accesso all'API: {response.status_code}")
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        data = response.json().get('data', {})
+        price = data.get('tcgplayer', {}).get('prices', {}).get('holofoil', {}).get('market', None)
+        image_url = data.get('images', {}).get('large', None)
+        return card_id, price, image_url
+    else:
+        print(f"Errore nell'accesso all'API per la carta {card_id}: {response.status_code}")
+        return card_id, None, None
+
+# Recupera i dati per ogni carta nel DataFrame usando il multithreading
+prices = {}
+images = {}
+
+with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+    future_to_card_id = {executor.submit(get_pokemon_card_data, card_id): card_id for card_id in df['id']}
     
-    return all_cards_data
-
-# Recupera tutti i dati dall'API
-cards_data = get_all_pokemon_card_data()
-
-# Crea dizionari per prezzi e URL delle immagini
-price_dict = {card['id']: card.get('tcgplayer', {}).get('prices', {}).get('holofoil', {}).get('market', None) for card in cards_data}
-image_url_dict = {card['id']: card.get('images', {}).get('large', None) for card in cards_data}
+    for future in concurrent.futures.as_completed(future_to_card_id):
+        card_id = future_to_card_id[future]
+        try:
+            card_id, price, image_url = future.result()
+            prices[card_id] = price
+            images[card_id] = image_url
+            print(f"Elaborazione ID carta {card_id} completata.")
+        except Exception as exc:
+            print(f"Errore nell'elaborazione della carta {card_id}: {exc}")
 
 # Aggiungi le nuove colonne al DataFrame
-df['prezzo'] = df['id'].map(price_dict)
-df['immagine'] = df['id'].map(image_url_dict)
+df['prezzo'] = df['id'].map(prices)
+df['immagine'] = df['id'].map(images)
+
+# Conta il numero di carte senza immagini
+num_no_image = df['immagine'].isna().sum()
+print(f"Numero di carte senza immagini: {num_no_image}")
 
 # Salva il nuovo CSV
-new_file_path = 'backend/carte_updated.csv'  # Sostituisci con il percorso desiderato per salvare il nuovo file
+new_file_path = 'backend/carte_updated.csv'  
 df.to_csv(new_file_path, index=False)
 
 print("Nuovo file CSV salvato con successo:", new_file_path)
