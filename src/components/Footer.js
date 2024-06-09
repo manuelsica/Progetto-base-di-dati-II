@@ -37,8 +37,8 @@ const Footer = () => {
       </div>
       <ul className="menu">
         <li><Link to="/">Home</Link></li>
-        <li><Link to="/espansioni">Espansioni</Link></li>
-        <li><Link to="/carte">Carte</Link></li>
+        <li><Link to="/espansioni">Expansions</Link></li>
+        <li><Link to="/carte">Cards</Link></li>
         {loggedIn && <li><Link to="/deck">Deck</Link></li>}
         <li><Link to="/login" onClick={loggedIn ? handleLogout : null}>{loggedIn ? 'Logout' : 'Login'}</Link></li>
       </ul>

@@ -25,8 +25,8 @@ const InfoCards = () => {
   return (
     <div className="info_cards animeX" id="info_cards">
       <div className="contentBx">
-        <h2>Esplora tutte le carte</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque accumsan odio in felis faucibus, ut consectetur tortor iaculis...</p>
+        <h2>Gotta Catch 'Em All!</h2>
+        <p>Choose your favourite Pokémon, choose your favourite Trainer and boom! Create your best Deck!</p>
         <div className="buttons_1">
           <MagicButton buttonText="Carte" navigateTo="/Carte" />
         </div>

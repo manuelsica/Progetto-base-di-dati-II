@@ -83,15 +83,15 @@ const CardDetails = () => {
         const deck = decks.find(deck => deck.id === parseInt(selectedDeck));
         const deckName = deck ? deck.name : "selected deck";
 
-        setSuccessMessage(`Carta ${card.name} aggiunta al mazzo ${deckName}`);
+        setSuccessMessage(`Card ${card.name} added to '${deckName}'`);
         setErrorMessage('');
       } else {
-        setErrorMessage('Seleziona un mazzo per aggiungere la carta.');
+        setErrorMessage('Please select a deck.');
         setSuccessMessage('');
       }
     } catch (error) {
       console.error('Error adding card to deck:', error);
-      setErrorMessage(error.response?.data?.message || 'Errore durante l\'aggiunta della carta al mazzo.');
+      setErrorMessage(error.response?.data?.message || 'Errore during adding of your card');
       setSuccessMessage('');
     }
   };
@@ -186,7 +186,7 @@ const CardDetails = () => {
                   <section className="pt-0 mb-4">
                     <div className="is-flex is-align-items-center mb-4">
                       <div className="title is-4 has-text-muted mb-0 mr-2">
-                        Prices: {getPrice()} euro
+                        Price: {getPrice()} euro
                       </div>
                     </div>
                   </section>
@@ -337,28 +337,28 @@ const CardDetails = () => {
                         </div>
                       )}
                     </div>
-                    <button onClick={handleDownloadJSON}>Download JSON</button>
+                   {/*  <button onClick={handleDownloadJSON}>Download JSON</button> */}
                   </section>
                   <section>
                     {isLoggedIn ? (
                       <div className="add-to-deck">
                         <div className="deck-select-wrapper">
                           <select className='deck-select' value={selectedDeck} onChange={(e) => setSelectedDeck(e.target.value)}>
-                            <option value="">Seleziona un mazzo</option>
+                            <option value="">Select a Deck</option>
                             {decks.map(deck => (
                               <option key={deck.id} value={deck.id}>{deck.name}</option>
                             ))}
                           </select>
                         </div>
                         <div className='button_deck'>
-                          <MagicButton buttonText='Aggiungi al mazzo' onClick={handleAddToDeck} />
+                          <MagicButton buttonText='Add to Deck' onClick={handleAddToDeck} />
                         </div>
                         {successMessage && <p className="success-message">{successMessage}</p>}
                         {errorMessage && <p className="error-message"><small>{errorMessage}</small></p>}
                       </div>
                     ) : (
                       <div className="add-to-deck">
-                        <MagicButton buttonText='Effettua login' onClick={() => navigate('/login')} />
+                        <MagicButton buttonText='Login' onClick={() => navigate('/login')} />
                       </div>
                     )}
                   </section>

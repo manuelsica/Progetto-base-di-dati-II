@@ -12,8 +12,8 @@ const Espansioni = () => {
           <img src={espansione_violetto} alt="Espansione Violetto" />
         </div>
         <div className="contentBx">
-          <h2>Scopri le espansioni dal 1999-2023</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque accumsan odio in felis faucibus, ut consectetur tortor iaculis...</p>
+          <h2>Explore all sets since 1999</h2>
+          <p>Lets go back in time and see how much Pokémon cards evolved through it!</p>
           <div className="buttons_1">
             {/* Utilizza il componente Link per creare il link alla pagina Espansioni_page */}
             <Link to="/Espansioni" className="link">

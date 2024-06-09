@@ -72,11 +72,11 @@ const Deck = () => {
         const isWordTooLong = words.some(word => word.length > 10);
 
         if (trimmedNewDeckName === currentDeckNameElement.innerText) {
-            setErrorMessage('Nome identico');
+            setErrorMessage('Same name');
         } else if (trimmedNewDeckName === '') {
-            setErrorMessage('Il nome non può essere vuoto');
+            setErrorMessage('Name cannot be empty');
         } else if (isWordTooLong) {
-            setErrorMessage('Ogni parola deve essere lunga massimo 10 caratteri');
+            setErrorMessage('Every word must be 10 characters long');
         } else {
             try {
                 const deckId = currentDeckNameElement.closest('.deck-card').dataset.id;
@@ -126,16 +126,16 @@ const Deck = () => {
                             <div className="deck-card" key={deck.id} data-id={deck.id}>
                                 <h2 className="deck-name">{deck.name}</h2>
                                 <div className="button-container">
-                                    <GreenButton buttonText="Rinomina mazzo" onClick={(e) => renameDeck(e.target.closest('.deck-card').querySelector('.deck-name'))} />
-                                    <MagicButton buttonText="Modifica mazzo" onClick={() => navigate(`/deck-details/${deck.id}`)} />
+                                    <GreenButton buttonText="Rename Deck" onClick={(e) => renameDeck(e.target.closest('.deck-card').querySelector('.deck-name'))} />
+                                    <MagicButton buttonText="Edit Deck" onClick={() => navigate(`/deck-details/${deck.id}`)} />
                                     <div className='remove-button'>
-                                        <MagicButton buttonText="Rimuovi mazzo" onClick={() => openDeleteModal(deck.id)} />
+                                        <MagicButton buttonText="Remove Deck" onClick={() => openDeleteModal(deck.id)} />
                                     </div>
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <GreenButton buttonText="Aggiungi Mazzo" onClick={addDeck} />
+                    <GreenButton buttonText="Add New Deck" onClick={addDeck} />
                 </div>
 
                 {isRenameModalOpen && (
@@ -146,15 +146,15 @@ const Deck = () => {
                     <div id="renameModal" className="modal" onClick={handleClickOutside} style={{ display: 'flex' }}>
                         <div className="modal-content">
                             <span className="close-button" onClick={closeModal}>&times;</span>
-                            <h2>Rinomina Mazzo</h2>
+                            <h2>Rename Deck</h2>
                             <input
                                 type="text"
                                 className='change-name-deck'
                                 value={newDeckName}
                                 onChange={(e) => setNewDeckName(e.target.value)}
-                                placeholder="Inserisci il nuovo nome del mazzo"
+                                placeholder="Enter the new name of the deck"
                             />
-                            <GreenButton buttonText="Conferma" onClick={confirmRename} />
+                            <GreenButton buttonText="Confirm" onClick={confirmRename} />
                             <p className="error-message">{errorMessage}</p>
                         </div>
                     </div>
@@ -168,9 +168,9 @@ const Deck = () => {
                     <div id="deleteModal" className="modal" onClick={handleClickOutside} style={{ display: 'flex' }}>
                         <div className="modal-content">
                             <span className="close-button" onClick={closeModal}>&times;</span>
-                            <h2>Conferma Rimozione</h2>
-                            <p>Sei sicuro di voler rimuovere questo mazzo?</p>
-                            <MagicButton buttonText="Conferma" onClick={confirmDelete} />
+                            <h2>Confirm Removal</h2>
+                            <p>Are you sure you want to delete this deck?</p>
+                            <MagicButton buttonText="Confirm" onClick={confirmDelete} />
                         </div>
                     </div>
                 )}

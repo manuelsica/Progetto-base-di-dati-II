@@ -10,22 +10,22 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 from datetime import timedelta
 import math
 
-# Load environment variables from .env file
+
 load_dotenv()
 
 app = Flask(__name__)
 
-# Set the secret key for JWT
+
 app.config['JWT_SECRET_KEY'] = os.getenv("SECRET_KEY", "a6ba480e3683129499e34b02a106e078")
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=24)
 
-# Initialize JWT
+
 jwt = JWTManager(app)
 
-# Enable CORS with credentials support
+
 CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://localhost:3000"}})
 
-# MongoDB connection
+
 MONGO_URI = 'mongodb://localhost:27017/'
 client = MongoClient(MONGO_URI)
 db = client["POKEDB"]
@@ -51,13 +51,13 @@ def home():
 @app.route('/generate-code', methods=['POST'])
 def generate_code():
     code = random.randint(100000, 999999)
-    print(f"Generated code: {code}")  # Debug print
+    print(f"Generated code: {code}")  
     return jsonify({'code': code})
 
 @app.route('/register', methods=['POST'])
 def register_user():
     data = request.get_json()
-    print(f"Register data received: {data}")  # Debug print
+    print(f"Register data received: {data}")  
     if 'code' not in data:
         return jsonify({"error": "Invalid data"}), 400
 
@@ -67,13 +67,13 @@ def register_user():
     }
 
     users_collection.insert_one(user)
-    print(f"User registered with code: {data['code']}")  # Debug print
+    print(f"User registered with code: {data['code']}")  
     return jsonify({"message": "User registered successfully"}), 201
 
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    print(f"Login data received: {data}")  # Debug print
+    print(f"Login data received: {data}") 
     if 'code' not in data:
         return jsonify({"error": "Invalid data"}), 400
 
@@ -86,24 +86,24 @@ def login():
 
     if user:
         access_token = create_access_token(identity={'code': user['code']})
-        print(f"Login successful for code: {code}")  # Debug print
+        print(f"Login successful for code: {code}") 
         return jsonify({"success": True, "message": "Login successful", "access_token": access_token}), 200
 
-    print(f"Login failed for code: {code}")  # Debug print
+    print(f"Login failed for code: {code}")  
     return jsonify({"success": False, "message": "Invalid code"}), 401
 
 @app.route('/status', methods=['GET'])
 @jwt_required()
 def status():
     current_user = get_jwt_identity()
-    print(f"Status check for user: {current_user}")  # Debug print
+    print(f"Status check for user: {current_user}") 
     return jsonify({'logged_in': True, 'user': current_user})
 
 @app.route('/logout', methods=['POST'])
 def logout():
     response = jsonify({'message': 'Logout successful'})
     response.delete_cookie('access_token')
-    print("User logged out")  # Debug print
+    print("User logged out") 
     return response
 
 @app.route('/decks', methods=['GET'])
@@ -112,7 +112,7 @@ def get_decks():
     current_user = get_jwt_identity()
     user = users_collection.find_one({"code": current_user['code']})
     decks = user.get("decks", [])
-    print(f"Decks for user {current_user['code']}: {decks}")  # Debug print
+    print(f"Decks for user {current_user['code']}: {decks}") 
     return jsonify(decks), 200
 
 @app.route('/decks', methods=['POST'])
@@ -125,7 +125,7 @@ def add_deck():
     new_deck_name = f"Deck {new_deck_id}"
     decks.append({"id": new_deck_id, "name": new_deck_name, "cards": []})
     users_collection.update_one({"code": current_user['code']}, {"$set": {"decks": decks}})
-    print(f"Added new deck {new_deck_name} for user {current_user['code']}")  # Debug print
+    print(f"Added new deck {new_deck_name} for user {current_user['code']}")  
     return jsonify({"message": "Deck added", "deck": {"id": new_deck_id, "name": new_deck_name}}), 201
 
 @app.route('/decks/<int:deck_id>', methods=['PUT'])
@@ -140,7 +140,7 @@ def rename_deck(deck_id):
             deck["name"] = new_name
             break
     users_collection.update_one({"code": current_user['code']}, {"$set": {"decks": decks}})
-    print(f"Renamed deck {deck_id} to {new_name} for user {current_user['code']}")  # Debug print
+    print(f"Renamed deck {deck_id} to {new_name} for user {current_user['code']}")  
     return jsonify({"message": "Deck renamed", "deck": {"id": deck_id, "name": new_name}}), 200
 
 @app.route('/decks/<int:deck_id>', methods=['DELETE'])
@@ -151,7 +151,7 @@ def delete_deck(deck_id):
     decks = user.get("decks", [])
     decks = [deck for deck in decks if deck["id"] != deck_id]
     users_collection.update_one({"code": current_user['code']}, {"$set": {"decks": decks}})
-    print(f"Deleted deck {deck_id} for user {current_user['code']}")  # Debug print
+    print(f"Deleted deck {deck_id} for user {current_user['code']}")  
     return jsonify({"message": "Deck deleted"}), 200
 
 @app.route('/decks/<int:deck_id>/cards', methods=['POST'])
@@ -251,7 +251,7 @@ def get_sets():
         sets = sets_collection.distinct('name')
         return jsonify({'data': sets})
     except Exception as e:
-        print(f"Error: {str(e)}")  # Debug log
+        print(f"Error: {str(e)}")  
         return jsonify({'error': str(e)}), 500
 
 @app.route('/db_sets', methods=['GET'])
@@ -261,7 +261,7 @@ def get_db_sets():
         sets = json_serializable(sets)
         return jsonify({'data': sets})
     except Exception as e:
-        print(f"Error: {str(e)}")  # Debug log
+        print(f"Error: {str(e)}")  
         return jsonify({'error': str(e)}), 500
 
 @app.route('/random-card-images', methods=['GET'])

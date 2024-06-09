@@ -58,10 +58,10 @@ const Login = () => {
       }
       const data = await response.json();
       console.log('Registration successful:', data.message);  // Debug print
-      setConfirmationMessage('Ti sei registrato');
+      setConfirmationMessage('You are in!');
     } catch (error) {
       console.error('Error registering user:', error);
-      setConfirmationMessage('Errore nella registrazione');
+      setConfirmationMessage('Register Error!');
     }
   };
 
@@ -104,21 +104,21 @@ const Login = () => {
             <div className="form-container sign-up">
               <form>
                 <h1>Genera il tuo account</h1>
-                {generatedCode && <small className="generate_code">Codice generato!</small>}
-                <input type="text" placeholder="Codice Univoco" value={generatedCode} readOnly />
+                {generatedCode && <small className="generate_code">Generated Code!</small>}
+                <input type="text" placeholder="Unique Code" value={generatedCode} readOnly />
                 <div className="container_3" onClick={handleGenerateCode}>
-                  <MagicButton buttonText="Genera" />
+                  <MagicButton buttonText="Generate" />
                 </div>
                 {confirmationMessage && <small className="generate_code">{confirmationMessage}</small>}
                 <div className="container_3" onClick={handleRegisterUser}>
-                  <MagicButton buttonText="Registrati" />
+                  <MagicButton buttonText="Register" />
                 </div>
               </form>
             </div>
             <div className="form-container sign-in">
               <form>
                 <h1>Login</h1>
-                <input type="text" name="code" placeholder="Codice univoco" ref={loginCodeRef} />
+                <input type="text" name="code" placeholder="Unique Code" ref={loginCodeRef} />
                 <div className="container_3" onClick={handleLogin}>
                   <MagicButton buttonText="Login" />
                 </div>
@@ -128,14 +128,14 @@ const Login = () => {
             <div className="toggle-container">
               <div className="toggle">
                 <div className="toggle-panel toggle-left">
-                  <h1>Bentornato!</h1>
-                  <p>Accedi per avere accesso a tutte le feature del sito</p>
+                  <h1>Welcome Back!</h1>
+                  <p> Log in to access all the features of the site.</p>
                   <YellowButton className="hidden" id="login" onClick={handleLoginClick} buttonText="Login" />
                 </div>
                 <div className="toggle-panel toggle-right">
-                  <h1>Hey, Allenatore!</h1>
-                  <p>Registrati per avere accesso a tutte le feature del sito</p>
-                  <YellowButton className="hidden" id="register" onClick={handleRegisterClick} buttonText="Registrati" />
+                  <h1>Hey, Trainer!</h1>
+                  <p>Register to access all the features of the site</p>
+                  <YellowButton className="hidden" id="register" onClick={handleRegisterClick} buttonText="Register" />
                 </div>
               </div>
             </div>
