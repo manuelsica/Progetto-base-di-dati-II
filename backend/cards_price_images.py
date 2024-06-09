@@ -1,30 +1,11 @@
 import pandas as pd
 import requests
 import concurrent.futures
+import json
 
 # Funzione per recuperare i dati di una singola carta dall'API di Pokemon TCG
 def get_pokemon_card_data(card):
-    card_id = card['id']
-    card_data = {
-        'id': card.get('id', None),
-        'name': card.get('name', None),
-        'supertype': card.get('supertype', None),
-        'subtypes': ', '.join(card.get('subtypes', [])),
-        'hp': card.get('hp', None),
-        'types': ', '.join(card.get('types', [])),
-        'evolvesTo': ', '.join(card.get('evolvesTo', [])),
-        'rules': ', '.join(card.get('rules', [])),
-        'attacks': ', '.join([attack['name'] for attack in card.get('attacks', [])]),
-        'weaknesses': ', '.join([weakness['type'] for weakness in card.get('weaknesses', [])]),
-        'retreatCost': ', '.join(card.get('retreatCost', [])),
-        'set_id': card.get('set', {}).get('id', None),
-        'set_name': card.get('set', {}).get('name', None),
-        'rarity': card.get('rarity', None),
-        'nationalPokedexNumbers': ', '.join(map(str, card.get('nationalPokedexNumbers', []))),
-        'image_url': card.get('images', {}).get('large', None),
-        'price': card.get('tcgplayer', {}).get('prices', {}).get('holofoil', {}).get('market', None)
-    }
-    return card_data
+    return card
 
 # Funzione per recuperare tutti i set dall'API di Pokemon TCG
 def get_all_pokemon_sets():
@@ -35,24 +16,8 @@ def get_all_pokemon_sets():
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
         data = response.json().get('data', [])
-        sets_data = []
-        for set_item in data:
-            set_data = {
-                'id': set_item.get('id', None),
-                'name': set_item.get('name', None),
-                'series': set_item.get('series', None),
-                'printedTotal': set_item.get('printedTotal', None),
-                'total': set_item.get('total', None),
-                'legalities': ', '.join([k for k, v in set_item.get('legalities', {}).items() if v == 'Legal']),
-                'ptcgoCode': set_item.get('ptcgoCode', None),
-                'releaseDate': set_item.get('releaseDate', None),
-                'updatedAt': set_item.get('updatedAt', None),
-                'symbol': set_item.get('images', {}).get('symbol', None),
-                'logo': set_item.get('images', {}).get('logo', None)
-            }
-            sets_data.append(set_data)
-        print(f"Recuperati {len(sets_data)} set.")
-        return sets_data
+        print(f"Recuperati {len(data)} set.")
+        return data
     else:
         print(f"Errore nell'accesso all'API: {response.status_code}")
         return []
@@ -114,13 +79,19 @@ df_sets = pd.DataFrame(sets_data)
 df_cards = df_cards.where(pd.notnull(df_cards), None)
 df_sets = df_sets.where(pd.notnull(df_sets), None)
 
-# Salva i nuovi CSV
-cards_file_path = 'backend/carte_api.csv'
-sets_file_path = 'backend/sets_api.csv'
-print("Salvataggio dei file CSV...")
-df_cards.to_csv(cards_file_path, index=False)
-df_sets.to_csv(sets_file_path, index=False)
+# Funzione per convertire DataFrame in un file JSON mantenendo la struttura originale
+def df_to_json(df, file_path):
+    records = df.to_dict(orient='records')
+    with open(file_path, 'w', encoding='utf-8') as f:
+        json.dump(records, f, ensure_ascii=False, indent=4)
 
-print("Nuovi file CSV salvati con successo:")
+# Salva i nuovi file JSON
+cards_file_path = 'backend/carte_api.json'
+sets_file_path = 'backend/sets_api.json'
+print("Salvataggio dei file JSON...")
+df_to_json(df_cards, cards_file_path)
+df_to_json(df_sets, sets_file_path)
+
+print("Nuovi file JSON salvati con successo:")
 print(f"Carte: {cards_file_path}")
 print(f"Set: {sets_file_path}")

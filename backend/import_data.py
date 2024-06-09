@@ -1,6 +1,7 @@
 import pandas as pd
 from pymongo import MongoClient
 from dotenv import load_dotenv
+import json
 import os
 
 # Carica le variabili d'ambiente dal file .env
@@ -13,15 +14,18 @@ db = client["POKEDB"]
 cards_collection = db["cards"]
 sets_collection = db["sets"]
 
-# Importa il CSV
-cards_df = pd.read_csv('backend/carte_api.csv')
+# Importa i dati delle carte dal file JSON
+with open('backend/carte_api.json', 'r', encoding='utf-8') as f:
+    cards_data = json.load(f)
 
-# Importa i dati dei set dal CSV
-sets_df = pd.read_csv('backend/sets_api.csv')
-sets_data = sets_df.to_dict(orient='records')
+# Importa i dati dei set dal file JSON
+with open('backend/sets_api.json', 'r', encoding='utf-8') as f:
+    sets_data = json.load(f)
+
+# Inserisci i dati dei set nel database
 sets_collection.insert_many(sets_data)
 
-# Converti il DataFrame in un dizionario e inserisci i dati nel database
-cards_collection.insert_many(cards_df.to_dict('records'))
+# Inserisci i dati delle carte nel database
+cards_collection.insert_many(cards_data)
 
-print("Cards imported successfully")
+print("Cards and sets imported successfully")

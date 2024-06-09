@@ -45,11 +45,7 @@ const CardDetails = () => {
   useEffect(() => {
     const fetchCardDetails = async () => {
       try {
-        const response = await axios.get(`https://api.pokemontcg.io/v2/cards/${id}`, {
-          headers: {
-            'X-Api-Key': '316d792f-ad9e-40ca-80ea-1578dfa9146d'
-          }
-        });
+        const response = await axios.get(`http://127.0.0.1:5000/cards/${id}`);
         setCard(response.data.data);
       } catch (err) {
         console.error('Error fetching card details:', err.message);
@@ -96,9 +92,12 @@ const CardDetails = () => {
   };
 
   const getPrice = () => {
+    if (typeof card.price === 'number') {
+      return card.price;
+    }
     const priceFields = ['normal', 'holofoil', 'reverseHolofoil', 'unlimited', '1stEditionHolofoil', 'unlimitedHolofoil'];
     for (let field of priceFields) {
-      const price = card.tcgplayer?.prices?.[field]?.mid || card.tcgplayer?.prices?.[field]?.high;
+      const price = card.price?.[field];
       if (price !== null && price !== undefined) {
         return price;
       }
@@ -140,7 +139,7 @@ const CardDetails = () => {
               <div className="column is-one-third">
                 <img
                   className="card-image"
-                  src={card.images.large || ''}
+                  src={card.image_url || ''}
                   alt={card.name}
                 />
               </div>
@@ -152,7 +151,7 @@ const CardDetails = () => {
                         <span className="title is-3">{card.name || ''}
                           {card.subtypes && (
                             <div className="title is-5 has-text-muted">
-                              Pokémon - {card.subtypes.join(', ')}
+                              Pokémon - {card.subtypes}
                             </div>
                           )}
                         </span>
@@ -165,7 +164,7 @@ const CardDetails = () => {
                           {card.types && (
                             <img
                               className="energy"
-                              src={getImageSrc(card.types[0])}
+                              src={getImageSrc(card.types)}
                               alt="Energy"
                             />
                           )}
@@ -185,45 +184,27 @@ const CardDetails = () => {
                   {card.abilities && (
                     <section>
                       <p className="heading">Abilities</p>
-                      {card.abilities.map((ability, index) => (
+                      {Array.isArray(card.abilities) ? card.abilities.map((ability, index) => (
                         <div className="card-details_ability" key={index}>
                           <p className="title is-5">{ability.type}: {ability.name}</p>
                           <p>{ability.text}</p>
                         </div>
-                      ))}
+                      )) : <p>No abilities available.</p>}
                     </section>
                   )}
                   {card.attacks && (
                     <section>
                       <p className="heading">Attacks</p>
                       <table>
-                        {card.attacks.map((attack, index) => (
-                          <tbody className="card-details_attack" key={index}>
+                        {typeof card.attacks === 'string' ? (
+                          <tbody className="card-details_attack">
                             <tr>
-                              <td className="nowrap">
-                                {attack.cost.map((type, idx) => (
-                                  <img
-                                    key={idx}
-                                    className="energy"
-                                    src={getImageSrc(type)}
-                                    alt="Energy"
-                                  />
-                                ))}
-                              </td>
                               <td className="attack-name">
-                                <span className="title is-4">{attack.name}</span>
-                              </td>
-                              <td>
-                                <span className="title is-4 is-muted nowrap">{attack.damage}</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td colSpan="3">
-                                <p className='info'>{attack.text}</p>
+                                <span className="title is-4">{card.attacks}</span>
                               </td>
                             </tr>
                           </tbody>
-                        ))}
+                        ) : <p>No attacks available.</p>}
                       </table>
                     </section>
                   )}
@@ -231,9 +212,11 @@ const CardDetails = () => {
                     <section>
                       <div className="card-details_ability">
                         <p className="heading">Rules</p>
-                        {card.rules.map((rule, idx) => (
-                          <p className="is-flex is-flex-direction-column" key={idx}>{rule}</p>
-                        ))}
+                        {typeof card.rules === 'string' ? (
+                          card.rules.split(', ').map((rule, idx) => (
+                            <p className="is-flex is-flex-direction-column" key={idx}>{rule}</p>
+                          ))
+                        ) : <p>No rules available.</p>}
                       </div>
                     </section>
                   )}
@@ -243,16 +226,16 @@ const CardDetails = () => {
                         <div className="column is-one-third-desktop is-one-third-tablet is-half-mobile">
                           <div className="card-details_weakness">
                             <p className="heading">Weakness</p>
-                            {card.weaknesses.map((weakness, idx) => (
-                              <p className="title is-5 is-flex is-align-items-center" key={idx}>
+                            {typeof card.weaknesses === 'string' ? (
+                              <p className="title is-5 is-flex is-align-items-center">
                                 <img
                                   className="energy"
-                                  src={getImageSrc(weakness.type)}
+                                  src={getImageSrc(card.weaknesses)}
                                   alt="Weakness"
                                 />
-                                <span className="ml-1">{weakness.value}</span>
+                                <span className="ml-1">{card.weaknesses}</span>
                               </p>
-                            ))}
+                            ) : <p>No weaknesses available.</p>}
                           </div>
                         </div>
                       )}
@@ -260,16 +243,16 @@ const CardDetails = () => {
                         <div className="column is-one-third-desktop is-one-third-tablet is-half-mobile">
                           <div className="card-details_resistance">
                             <p className="heading">Resistance</p>
-                            {card.resistances.map((resistance, idx) => (
-                              <p className="title is-5 is-flex is-align-items-center" key={idx}>
+                            {typeof card.resistances === 'string' ? (
+                              <p className="title is-5 is-flex is-align-items-center">
                                 <img
                                   className="energy"
-                                  src={getImageSrc(resistance.type)}
+                                  src={getImageSrc(card.resistances)}
                                   alt="Resistance"
                                 />
-                                <span className="ml-1">{resistance.value}</span>
+                                <span className="ml-1">{card.resistances}</span>
                               </p>
-                            ))}
+                            ) : <p>No resistances available.</p>}
                           </div>
                         </div>
                       )}
@@ -277,14 +260,14 @@ const CardDetails = () => {
                         <div className="column is-one-third-desktop is-one-third-tablet is-half-mobile">
                           <div className="card-details_retreat">
                             <p className="heading">Retreat Cost</p>
-                            {card.retreatCost.map((type, idx) => (
+                            {typeof card.retreatCost === 'string' ? card.retreatCost.split(', ').map((type, idx) => (
                               <img
                                 key={idx}
                                 className="energy"
                                 src={getImageSrc(type)}
                                 alt="Retreat Cost"
                               />
-                            ))}
+                            )) : <p>No retreat cost available.</p>}
                           </div>
                         </div>
                       )}
@@ -304,7 +287,7 @@ const CardDetails = () => {
                           </div>
                         </div>
                       )}
-                      {card.set && (
+                      {card.set_name && (
                         <div className="column is-one-third-desktop is-one-third-tablet is-half-mobile">
                           <div className="card-details_set">
                             <p className="heading">Set</p>
@@ -313,17 +296,17 @@ const CardDetails = () => {
                                 className="is-flex is-align-items-center"
                                 href=""
                               >
-                                {card.set.name}
+                                {card.set_name}
                               </a>
                             </p>
                           </div>
                         </div>
                       )}
-                      {card.number && card.set && (
+                      {card.nationalPokedexNumbers && (
                         <div className="column is-one-third-desktop is-one-third-tablet is-half-mobile">
                           <div className="card-details_number">
-                            <p className="heading">Number</p>
-                            <p className="title is-5">{card.number} / {card.set.printedTotal}</p>
+                            <p className="heading">National Pokédex Number</p>
+                            <p className="title is-5">{card.nationalPokedexNumbers}</p>
                           </div>
                         </div>
                       )}
@@ -337,7 +320,7 @@ const CardDetails = () => {
                           <select className='deck-select' value={selectedDeck} onChange={(e) => setSelectedDeck(e.target.value)}>
                             <option value="">Seleziona un mazzo</option>
                             {decks.map(deck => (
-                              <option key={deck.id} value={deck.id}>{deck.name}</option>
+                              <option key={deck._id} value={deck._id}>{deck.name}</option>
                             ))}
                           </select>
                         </div>

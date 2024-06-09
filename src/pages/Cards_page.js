@@ -26,12 +26,9 @@ const Carte = () => {
   const [selectedSupertype, setSelectedSupertype] = useState('');
 
   useEffect(() => {
-    // Fetch all sets for the dropdown
     const fetchSets = async () => {
       try {
         const response = await axios.get('http://127.0.0.1:5000/sets');
-        console.log('Sets response:', response);  // Debug log
-        console.log("tipo set:", typeof response.data)
         setSets(response.data.data || []);
       } catch (err) {
         console.error('Error fetching sets:', err.message);
@@ -52,25 +49,11 @@ const Carte = () => {
             set: selectedSet,
             type: selectedType,
             supertype: selectedSupertype
-          }, 
-          responseType: 'json'
+          }
         });
-       
-        let data;
-            if (typeof response.data === 'string') {
-                try {
-                    data = JSON.parse(response.data);
-                } catch (parseError) {
-                    console.error('Error parsing JSON:', parseError);
-                    setError('Error parsing response data');
-                    return;
-                }
-            } else {
-                data = response.data;
-            }
 
-        const totalCards = data.totalCount;
-        setTotalPages(Math.ceil(totalCards / 30));
+        const { totalCount } = response.data;
+        setTotalPages(Math.ceil(totalCount / 30));
       } catch (err) {
         console.error('Error fetching total pages:', err.message);
         setError('Error fetching total pages');
@@ -82,53 +65,32 @@ const Carte = () => {
 
   useEffect(() => {
     const fetchCards = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const response = await axios.get('http://127.0.0.1:5000/cards', {
-                params: {
-                    pageSize: 30,
-                    search,
-                    set: selectedSet,
-                    type: selectedType,
-                    supertype: selectedSupertype
-                },
-                responseType: 'json'
-            });
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await axios.get('http://127.0.0.1:5000/cards', {
+          params: {
+            page,
+            pageSize: 30,
+            search,
+            set: selectedSet,
+            type: selectedType,
+            supertype: selectedSupertype
+          }
+        });
 
-            console.log("Response type:", typeof response.data);
-
-            // Assicurati che la risposta sia un oggetto JSON
-            let data;
-            if (typeof response.data === 'string') {
-                try {
-                    data = JSON.parse(response.data);
-                } catch (parseError) {
-                    console.error('Error parsing JSON:', parseError);
-                    setError('Error parsing response data');
-                    return;
-                }
-            } else {
-                data = response.data;
-            }
-
-            const cards = data.data || [];
-            setCards(cards);
-
-            if (cards.length === 0 && page > 1) {
-                setPage(page - 1);
-            }
-        } catch (err) {
-            console.error('Error fetching cards:', err.message);
-            setError('Error fetching cards');
-        } finally {
-            setLoading(false);
-        }
+        const { data } = response.data;
+        setCards(data);
+      } catch (err) {
+        console.error('Error fetching cards:', err.message);
+        setError('Error fetching cards');
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchCards();
-}, [page, search, selectedSet, selectedType, selectedSupertype]);
-
+  }, [page, search, selectedSet, selectedType, selectedSupertype]);
 
   const handlePageChange = (pageNum) => {
     setPage(pageNum);

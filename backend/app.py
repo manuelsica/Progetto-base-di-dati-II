@@ -228,25 +228,25 @@ def get_cards():
         if search:
             query['name'] = {'$regex': search, '$options': 'i'}
         if selected_set:
-            query['set'] = selected_set
+            query['set_name'] = selected_set
         if selected_type:
             query['types'] = selected_type
         if selected_supertype:
             query['supertype'] = selected_supertype
 
-        print(f"Query: {query}")  # Debug log
         total_cards = cards_collection.count_documents(query)
         cards = list(cards_collection.find(query).skip((page - 1) * page_size).limit(page_size))
         cards = json_serializable(cards)
-        print(f"Total cards: {total_cards}")  # Debug log
 
         return jsonify({
             'data': cards,
-            'totalCount': total_cards
+            'totalCount': total_cards,
+            'currentPage': page,
+            'totalPages': math.ceil(total_cards / page_size)
         })
     except Exception as e:
-        print(f"Error: {str(e)}")  # Debug log
         return jsonify({'error': str(e)}), 500
+
 
 @app.route('/sets', methods=['GET'])
 def get_sets():
@@ -256,6 +256,19 @@ def get_sets():
     except Exception as e:
         print(f"Error: {str(e)}")  # Debug log
         return jsonify({'error': str(e)}), 500
+
+@app.route('/cards/<string:card_id>', methods=['GET'])
+def get_card_details(card_id):
+    try:
+        card = cards_collection.find_one({"_id": ObjectId(card_id)})
+        if card:
+            card = json_serializable(card)
+            return jsonify({'data': card})
+        else:
+            return jsonify({'error': 'Card not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
