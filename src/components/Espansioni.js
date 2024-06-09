@@ -17,7 +17,7 @@ const Espansioni = () => {
           <div className="buttons_1">
             {/* Utilizza il componente Link per creare il link alla pagina Espansioni_page */}
             <Link to="/Espansioni" className="link">
-              <B buttonText="Espansioni"/>
+              <B buttonText="Expansions"/>
             </Link>
           </div>
         </div>

@@ -164,23 +164,24 @@ def add_card_to_deck(deck_id):
 
     for deck in decks:
         if deck["id"] == deck_id:
-            card_already_in_deck = card_id in deck.get("cards", [])
+            card_count = deck.get("cards", []).count(card_id)
 
-            if card_already_in_deck:
+            if card_count >= 4:
                 card_details = cards_collection.find_one({"_id": ObjectId(card_id)})
                 card_supertype = card_details.get('supertype', '')
 
-                if card_supertype != 'Energy' and card_supertype != 'Trainer':
-                    return jsonify({"message": "La carta è già presente nel mazzo"}), 400
+                if card_supertype != 'Energy':
+                    return jsonify({"message": "Card reached max number available!"}), 400
 
             if len(deck.get("cards", [])) >= 60:
-                return jsonify({"message": "Il mazzo contiene già 60 carte"}), 400
+                return jsonify({"message": "Deck has reached 60 cards."}), 400
 
             deck.setdefault("cards", []).append(card_id)
             break
 
     users_collection.update_one({"code": current_user['code']}, {"$set": {"decks": decks}})
-    return jsonify({"message": f"Carta {card_id} aggiunta al mazzo {deck_id}", "card": card_id}), 200
+    return jsonify({"message": f"Card {card_id} added to '{deck_id}' ", "card": card_id}), 200
+
 
 @app.route('/decks/<int:deck_id>/cards', methods=['GET'])
 @jwt_required()
@@ -210,7 +211,7 @@ def remove_card_from_deck(deck_id, card_id):
                 break
 
     users_collection.update_one({"code": current_user['code']}, {"$set": {"decks": decks}})
-    return jsonify({"message": f"Carta {card_id} rimossa dal mazzo {deck_id}"}), 200
+    return jsonify({"message": f"Card {card_id} removed from '{deck_id}' "}), 200
 
 @app.route('/cards', methods=['GET'])
 def get_cards():
