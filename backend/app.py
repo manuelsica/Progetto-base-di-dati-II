@@ -8,6 +8,7 @@ from bson import ObjectId
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from datetime import timedelta
+import math
 
 # Load environment variables from .env file
 load_dotenv()
@@ -32,7 +33,6 @@ users_collection = db["users"]
 cards_collection = db["cards"]
 sets_collection = db["sets"]
 
-# Helper function to convert MongoDB documents to JSON serializable format
 def json_serializable(doc):
     if isinstance(doc, list):
         return [json_serializable(d) for d in doc]
@@ -40,6 +40,8 @@ def json_serializable(doc):
         return {key: json_serializable(value) for key, value in doc.items()}
     if isinstance(doc, ObjectId):
         return str(doc)
+    if isinstance(doc, float) and math.isnan(doc):
+        return None
     return doc
 
 @app.route('/')
@@ -236,7 +238,7 @@ def get_cards():
         total_cards = cards_collection.count_documents(query)
         cards = list(cards_collection.find(query).skip((page - 1) * page_size).limit(page_size))
         cards = json_serializable(cards)
-        print(f"Total cards: {total_cards}, Cards: {cards}")  # Debug log
+        print(f"Total cards: {total_cards}")  # Debug log
 
         return jsonify({
             'data': cards,
