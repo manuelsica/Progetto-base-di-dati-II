@@ -15,7 +15,6 @@ const Espansioni = () => {
           <h2>Explore all sets since 1999</h2>
           <p>Lets go back in time and see how much Pokémon cards evolved through it!</p>
           <div className="buttons_1">
-            {/* Utilizza il componente Link per creare il link alla pagina Espansioni_page */}
             <Link to="/Espansioni" className="link">
               <B buttonText="Expansions"/>
             </Link>

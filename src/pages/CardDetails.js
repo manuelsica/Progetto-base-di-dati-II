@@ -145,6 +145,7 @@ const CardDetails = () => {
       <div id="wrapper">
         <div className="card_details">
           <div className="container">
+          {successMessage && <p className="success-message">{successMessage}</p>}
             <div id="card-details" className="columns" data-controller="card">
               <div className="column is-one-third">
                 <img
@@ -353,7 +354,7 @@ const CardDetails = () => {
                         <div className='button_deck'>
                           <MagicButton buttonText='Add to Deck' onClick={handleAddToDeck} />
                         </div>
-                        {successMessage && <p className="success-message">{successMessage}</p>}
+                        
                         {errorMessage && <p className="error-message"><small>{errorMessage}</small></p>}
                       </div>
                     ) : (

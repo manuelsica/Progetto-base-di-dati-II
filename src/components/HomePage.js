@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Importa il componente Link
+import { Link } from 'react-router-dom';
 import YellowButton from './YellowButton';
 
 const HomePage = () => {
@@ -11,7 +11,6 @@ const HomePage = () => {
           Explore all kinds of Pokémon cards and build your own deck!
         </p>
         <div className="buttons">
-          {/* Utilizza il componente Link per creare il link alle pagine Espansioni_page e Cards_page */}
           <Link to="/Espansioni" className="link">
             <YellowButton buttonText="Expansions" />
           </Link>

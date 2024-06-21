@@ -2482,6 +2482,13 @@ p.info {
     color: var(--text-color);
 }
 
+p.success-message {
+    /* margin-bottom: 150px; */
+    font-size: 20px;
+    color: lightgreen;
+    padding: 100px;
+}
+
 /* Container for buttons to align them horizontally */
 .button-container {
     display: flex;
