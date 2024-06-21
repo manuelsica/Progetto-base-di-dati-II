@@ -149,10 +149,21 @@ def delete_deck(deck_id):
     current_user = get_jwt_identity()
     user = users_collection.find_one({"code": current_user['code']})
     decks = user.get("decks", [])
-    decks = [deck for deck in decks if deck["id"] != deck_id]
-    users_collection.update_one({"code": current_user['code']}, {"$set": {"decks": decks}})
-    print(f"Deleted deck {deck_id} for user {current_user['code']}")  
-    return jsonify({"message": "Deck deleted"}), 200
+    deck_to_delete = next((deck for deck in decks if deck["id"] == deck_id), None)
+
+    if deck_to_delete:
+        # Rimuovi le carte associate al mazzo
+        card_ids = deck_to_delete.get("cards", [])
+        for card_id in card_ids:
+            cards_collection.delete_one({"_id": ObjectId(card_id)})
+
+        # Rimuovi il mazzo dall'utente
+        decks = [deck for deck in decks if deck["id"] != deck_id]
+        users_collection.update_one({"code": current_user['code']}, {"$set": {"decks": decks}})
+        print(f"Deleted deck {deck_id} for user {current_user['code']}")  
+        return jsonify({"message": "Deck deleted"}), 200
+    else:
+        return jsonify({"message": "Deck not found"}), 404
 
 @app.route('/decks/<int:deck_id>/cards', methods=['POST'])
 @jwt_required()
@@ -209,6 +220,9 @@ def remove_card_from_deck(deck_id, card_id):
             if card_id in deck.get("cards", []):
                 deck["cards"].remove(card_id)
                 break
+
+    # Rimuovi la carta dal database
+    cards_collection.delete_one({"_id": ObjectId(card_id)})
 
     users_collection.update_one({"code": current_user['code']}, {"$set": {"decks": decks}})
     return jsonify({"message": f"Card {card_id} removed from '{deck_id}' "}), 200
