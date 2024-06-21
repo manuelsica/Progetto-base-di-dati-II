@@ -12,7 +12,7 @@ const Footer = () => {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
-        console.log("Status check response:", response.data);  // Debug print
+        console.log("Status check response:", response.data);  
         setLoggedIn(response.data.logged_in);
       })
       .catch(error => {
@@ -21,12 +21,6 @@ const Footer = () => {
       });
     }
   }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setLoggedIn(false);
-    console.log("User logged out");  // Debug print
-  };
 
   return (
     <footer>
@@ -39,8 +33,6 @@ const Footer = () => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/espansioni">Expansions</Link></li>
         <li><Link to="/carte">Cards</Link></li>
-        {loggedIn && <li><Link to="/deck">Deck</Link></li>}
-        <li><Link to="/login" onClick={loggedIn ? handleLogout : null}>{loggedIn ? 'Logout' : 'Login'}</Link></li>
       </ul>
       <p className="rights">©2024 PokeDB | All Rights Reserved</p>
     </footer>

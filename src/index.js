@@ -8,7 +8,7 @@ import Deck from './pages/Deck';
 import EspansioniCarte from './pages/EspansioniCarte';
 import Carte from './pages/Cards_page';
 import CardDetails from './pages/CardDetails';
-import DeckDetails from './pages/DeckDetails';  // Import the new DeckDetails component
+import DeckDetails from './pages/DeckDetails'; 
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
@@ -24,7 +24,7 @@ ReactDOM.render(
             <Route path="/expansion-cards/:setId" element={<EspansioniCarte />} />
             <Route path="/Carte" element={<Carte />} />
             <Route path="/card-details/:id" element={<CardDetails />} />
-            <Route path="/deck-details/:id" element={<DeckDetails />} /> {/* Add the new route */}
+            <Route path="/deck-details/:id" element={<DeckDetails />} /> 
         </Routes>
     </Router>,
     document.getElementById('root')

@@ -8,6 +8,7 @@ import MagicButton from '../components/MagicButton';
 import { Helmet } from 'react-helmet';
 
 axios.defaults.withCredentials = false;
+
 const DeckDetails = () => {
     const { id } = useParams();
     const [cards, setCards] = useState([]);
@@ -30,7 +31,7 @@ const DeckDetails = () => {
                 });
                 const cardIds = response.data.cards;
 
-                const cardDetailsPromises = cardIds.map(cardId => 
+                const cardDetailsPromises = cardIds.map(cardId =>
                     axios.get(`http://127.0.0.1:5000/cards/${cardId}`, {
                         headers: { Authorization: `Bearer ${token}` }
                     })
@@ -71,30 +72,31 @@ const DeckDetails = () => {
     }, []);
 
     useEffect(() => {
-        const fetchCards = async () => {
-            try {
-                let filteredCards = originalCards;
-                if (search) {
-                    filteredCards = originalCards.filter(card => card.name.toLowerCase().includes(search.toLowerCase()));
-                }
-                if (selectedSet) {
-                    filteredCards = filteredCards.filter(card => card.set.id === selectedSet);
-                }
-                if (selectedType) {
-                    filteredCards = filteredCards.filter(card => card.types.includes(selectedType));
-                }
-                if (selectedSupertype) {
-                    filteredCards = filteredCards.filter(card => card.supertype === selectedSupertype);
-                }
+        const filterCards = () => {
+            let filteredCards = originalCards;
 
-                setCards(filteredCards);
-            } catch (err) {
-                console.error('Error fetching filtered cards:', err.message);
+            if (search) {
+                filteredCards = filteredCards.filter(card =>
+                    card.name.toLowerCase().includes(search.toLowerCase())
+                );
             }
+            if (selectedSet) {
+                filteredCards = filteredCards.filter(card => card.set && card.set.id === selectedSet);
+            }
+            if (selectedType) {
+                filteredCards = filteredCards.filter(card =>
+                    card.types && card.types.includes(selectedType)
+                );
+            }
+            if (selectedSupertype) {
+                filteredCards = filteredCards.filter(card => card.supertype === selectedSupertype);
+            }
+
+            setCards(filteredCards);
         };
 
-        fetchCards();
-    }, [selectedSet, selectedType, selectedSupertype, search, originalCards]);
+        filterCards();
+    }, [search, selectedSet, selectedType, selectedSupertype, originalCards]);
 
     const getPrice = (card) => {
         const priceFields = ['normal', 'holofoil', 'reverseHolofoil', 'unlimited', '1stEditionHolofoil', 'unlimitedHolofoil'];

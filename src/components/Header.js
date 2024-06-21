@@ -14,7 +14,7 @@ const Header = () => {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
-        console.log("Status check response:", response.data);  // Debug print
+        console.log("Status check response:", response.data);  
         setLoggedIn(response.data.logged_in);
       })
       .catch(error => {
@@ -27,7 +27,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setLoggedIn(false);
-    console.log("User logged out");  // Debug print
+    console.log("User logged out");  
   };
 
   const toggleMenu = () => {
